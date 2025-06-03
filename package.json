@@ -1,0 +1,93 @@
+{
+  "name": "@cxbuilder/aws-lex",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK",
+  "author": {
+    "name": "CXBuilder",
+    "email": "ivan@cxbuilder.ai",
+    "organization": true,
+    "url": "https://github.com/orgs/CXBuilder"
+  },
+  "repository": {
+    "url": "git+https://github.com/cxbuilder/aws-lex.git",
+    "type": "git"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "lex",
+    "chatbot",
+    "bot",
+    "conversation",
+    "voice",
+    "nlp",
+    "constructs",
+    "awscdk",
+    "aws-cdk",
+    "amazon connect"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    ".jsii",
+    "CHANGELOG.md",
+    "LICENSE.txt",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && jsii",
+    "build:watch": "jsii --watch",
+    "cdk": "cdk",
+    "clean": "rimraf dist",
+    "deploy": "npm run cdk -- deploy --require-approval never",
+    "package": "rimraf packages && jsii-pacmak",
+    "publish": "NPM_ACCESS_LEVEL=public publib packages",
+    "test": "jest",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "22.7.9",
+    "aws-cdk": "2.1014.0",
+    "aws-cdk-lib": "2.194.0",
+    "constructs": "10.0.0",
+    "jest": "^29.7.0",
+    "jsii": "^5.8.11",
+    "jsii-pacmak": "^1.112.0",
+    "publib": "^0.2.996",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.6.3"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.194.0",
+    "constructs": "^10.0.0"
+  },
+  "stability": "stable",
+  "jsii": {
+    "outdir": "packages",
+    "versionFormat": "short",
+    "targets": {
+      "python": {
+        "distName": "cxbuilder-aws-lex",
+        "module": "cxbuilder_aws_lex",
+        "classifiers": [
+          "Framework :: AWS CDK",
+          "Framework :: AWS CDK :: 2"
+        ]
+      }
+    },
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/cxbuilder/aws-lex/issues"
+  },
+  "homepage": "https://github.com/cxbuilder/aws-lex#readme"
+}
