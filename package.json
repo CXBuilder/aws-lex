@@ -10,7 +10,7 @@
     "url": "https://www.cxbuilder.ai"
   },
   "repository": {
-    "url": "git+https://github.com/cxbuilder/aws-lex.git",
+    "url": "https://github.com/cxbuilder/aws-lex.git",
     "type": "git"
   },
   "keywords": [
@@ -45,7 +45,8 @@
     "clean": "rimraf dist",
     "deploy": "npm run cdk -- deploy --require-approval never",
     "package": "rimraf packages && jsii-pacmak",
-    "publish": "NPM_ACCESS_LEVEL=public publib packages",
+    "publish-node": "NPM_ACCESS_LEVEL=public publib-npm packages/js",
+    "publish-python": "twine upload --verbose --skip-existing packages/python/*",
     "test": "jest",
     "watch": "tsc -w"
   },
