@@ -31,7 +31,6 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "examples",
     "src",
     ".jsii",
     "CHANGELOG.md",
