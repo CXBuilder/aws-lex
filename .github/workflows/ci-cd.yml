@@ -1,13 +1,14 @@
 name: CI/CD Pipeline
 
 on:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
   release:
     types: [published]
-  workflow_dispatch:
+
+  # workflow_dispatch:
 
 jobs:
   test:
