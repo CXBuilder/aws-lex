@@ -18,7 +18,7 @@ export interface LocaleCodeHook {
   /**
    * Whether to invoke the lambda for each dialog turn
    */
-  readonly dialog: boolean;
+  readonly dialog?: boolean;
   /**
    * Whether to invoke the lambda for each intent fulfillment
    */
