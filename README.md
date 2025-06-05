@@ -1,5 +1,9 @@
 # @cxbuilder/aws-lex
 
+[![CI/CD Pipeline](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml)
+[![npm version](https://badge.fury.io/js/@cxbuilder%2Faws-lex.svg)](https://badge.fury.io/js/@cxbuilder%2Faws-lex)
+[![PyPI version](https://badge.fury.io/py/cxbuilder-aws-lex.svg)](https://badge.fury.io/py/cxbuilder-aws-lex)
+
 ## Overview
 
 The `@cxbuilder/aws-lex` package provides higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK. It significantly simplifies the process of building conversational interfaces with Amazon Lex by abstracting away the complexity of the AWS LexV2 L1 constructs.
