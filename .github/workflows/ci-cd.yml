@@ -37,6 +37,7 @@ jobs:
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
 
     env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
@@ -48,6 +49,7 @@ jobs:
           node-version: '22'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v4
