@@ -65,7 +65,7 @@ jobs:
       - name: Publish to npm
         run: npm run publish-node
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to PyPI
         run: npm run publish-python
