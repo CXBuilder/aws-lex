@@ -2,7 +2,7 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
-- 1.0.1 - 2025-06-06 ivan.bliskavka
+- 1.0.2 - 2025-06-06 ivan.bliskavka
 
   - Python example in readme is redundant. ConstructHub automatically makes the conversion
 
