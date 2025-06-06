@@ -4,6 +4,10 @@
 
 - 1.0.1 - 2025-06-06 ivan.bliskavka
 
+  - Python example in readme is redundant. ConstructHub automatically makes the conversion
+
+- 1.0.1 - 2025-06-06 ivan.bliskavka
+
   - Enhanced README with comprehensive examples and installation instructions
   - Added TypeScript and Python quick start examples with concise utterances
   - Included advanced example demonstrating slots and Lambda integration

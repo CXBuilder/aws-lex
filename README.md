@@ -87,51 +87,6 @@ new Bot(stack, 'YesNoBot', {
 });
 ```
 
-### Python
-
-```python
-import aws_cdk as cdk
-from cxbuilder_aws_lex import Bot, Locale, Intent
-
-app = cdk.App()
-stack = cdk.Stack(app, 'MyLexStack')
-
-Bot(
-    stack, "YesNoBot",
-    name="my-yes-no-bot",
-    locales=[
-        Locale(
-            locale_id="en_US",
-            voice_id="Joanna",
-            intents=[
-                Intent(
-                    name="Yes",
-                    utterances=["yes", "yeah", "yep", "absolutely", "of course"],
-                ),
-                Intent(
-                    name="No",
-                    utterances=["no", "nope", "never", "absolutely not", "no way"],
-                ),
-            ],
-        ),
-        Locale(
-            locale_id="es_US",
-            voice_id="Lupe",
-            intents=[
-                Intent(
-                    name="Yes",
-                    utterances=["sí", "claro", "por supuesto", "correcto", "exacto"],
-                ),
-                Intent(
-                    name="No",
-                    utterances=["no", "para nada", "negativo", "jamás", "en absoluto"],
-                ),
-            ],
-        ),
-    ],
-)
-```
-
 ## Advanced Example: Bot with Slots and Lambda Integration
 
 ```typescript
