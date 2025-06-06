@@ -1,6 +1,6 @@
 {
   "name": "@cxbuilder/aws-lex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "Higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK",
   "author": {
@@ -41,6 +41,7 @@
     "build": "npm run clean && jsii",
     "build:watch": "jsii --watch",
     "cdk": "cdk",
+    "check-version": "if test $(npm view $npm_package_name version) = $npm_package_version ; then echo \"You must increment package version\" ; exit 1 ; fi ",
     "clean": "rimraf dist",
     "deploy": "npm run cdk -- deploy --require-approval never",
     "package": "rimraf packages && jsii-pacmak",

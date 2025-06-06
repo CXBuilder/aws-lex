@@ -32,6 +32,9 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Check version
+        run: npm run check-version
+
   publish:
     needs: test
     runs-on: ubuntu-latest

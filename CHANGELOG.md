@@ -2,7 +2,7 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
-- 1.0.1 - 2025-06-05 ivan.bliskavka
+- 1.0.1 - 2025-06-06 ivan.bliskavka
 
   - Enhanced README with comprehensive examples and installation instructions
   - Added TypeScript and Python quick start examples with concise utterances
