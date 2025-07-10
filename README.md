@@ -3,6 +3,7 @@
 [![CI/CD Pipeline](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml)
 [![npm version](https://badge.fury.io/js/@cxbuilder%2Faws-lex.svg)](https://badge.fury.io/js/@cxbuilder%2Faws-lex)
 [![PyPI version](https://badge.fury.io/py/cxbuilder-aws-lex.svg)](https://badge.fury.io/py/cxbuilder-aws-lex)
+[![View on Construct Hub](https://constructs.dev/badge?package=%40cxbuilder%2Faws-lex)](https://constructs.dev/packages/@cxbuilder/aws-lex)
 
 ## Overview
 

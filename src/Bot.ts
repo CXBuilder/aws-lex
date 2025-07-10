@@ -118,7 +118,7 @@ export class Bot extends Construct {
     });
 
     // Allow bot alias to invoke function(s)
-    props.locales.forEach((l) => l.addPermission(this.cfnBotAlias.attrArn));
+    props.locales.forEach((l) => l.addPermission(this, this.cfnBot.ref));
   }
 
   private botAliasLocaleSettings(): CfnBotAlias.BotAliasLocaleSettingsItemProperty[] {

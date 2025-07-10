@@ -2,6 +2,11 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
+- 1.1.0 - 2025-07-10 ivan.bliskavka
+
+  - Added Intent `confirmationFailurePrompt` and `fulfillmentFailurePrompt`
+  - Automatically allow all aliases to call the codehook lambda
+
 - 1.0.2 - 2025-06-06 ivan.bliskavka
 
   - Python example in readme is redundant. ConstructHub automatically makes the conversion

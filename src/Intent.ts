@@ -6,7 +6,9 @@ export interface IntentProps {
   readonly utterances: string[];
   readonly slots?: Slot[];
   readonly confirmationPrompt?: string;
+  readonly confirmationFailurePrompt?: string;
   readonly fulfillmentPrompt?: string;
+  readonly fulfillmentFailurePrompt?: string;
 }
 
 export class Intent {
@@ -23,16 +25,28 @@ export class Intent {
   confirmationPrompt?: string;
 
   /**
+   * If provided, lex will speak this when confirmation is declined
+   */
+  confirmationDeclinedPrompt?: string;
+
+  /**
    * If provided, lex will speak this when the intent is fullfilled
    */
   fulfillmentPrompt?: string;
+
+  /**
+   * If provided, lex will speak this when the intent fulfillment fails
+   */
+  fulfillmentFailurePrompt?: string;
 
   constructor(props: IntentProps) {
     this.name = props.name;
     this.utterances = props.utterances;
     this.slots = props.slots;
     this.confirmationPrompt = props.confirmationPrompt;
+    this.confirmationDeclinedPrompt = props.confirmationFailurePrompt;
     this.fulfillmentPrompt = props.fulfillmentPrompt;
+    this.fulfillmentFailurePrompt = props.fulfillmentFailurePrompt;
   }
 
   public toCdk(
@@ -61,12 +75,14 @@ export class Intent {
   private getPostFulfillmentPrompt():
     | CfnBot.PostFulfillmentStatusSpecificationProperty
     | undefined {
-    if (!this.fulfillmentPrompt) {
+    if (!this.fulfillmentPrompt && !this.fulfillmentFailurePrompt) {
       return undefined;
     }
 
-    return {
-      successResponse: {
+    const response: any = {};
+
+    if (this.fulfillmentPrompt) {
+      response.successResponse = {
         messageGroupsList: [
           {
             message: {
@@ -77,31 +93,38 @@ export class Intent {
           },
         ],
         allowInterrupt: true,
-      },
-      failureResponse: {
+      };
+    }
+
+    if (this.fulfillmentFailurePrompt) {
+      response.failureResponse = {
         messageGroupsList: [
           {
             message: {
               plainTextMessage: {
-                value: 'Sorry, I was unable to fulfill your request.',
+                value: this.fulfillmentFailurePrompt,
               },
             },
           },
         ],
         allowInterrupt: true,
-      },
-    };
+      };
+    }
+
+    return response as CfnBot.PostFulfillmentStatusSpecificationProperty;
   }
 
   private getIntentConfirmationSetting():
     | CfnBot.IntentConfirmationSettingProperty
     | undefined {
-    if (!this.confirmationPrompt) {
+    if (!this.confirmationPrompt && !this.confirmationDeclinedPrompt) {
       return undefined;
     }
 
-    return {
-      promptSpecification: {
+    const response: any = {};
+
+    if (this.confirmationPrompt) {
+      response.promptSpecification = {
         messageGroupsList: [
           {
             message: {
@@ -113,19 +136,24 @@ export class Intent {
         ],
         maxRetries: 3,
         allowInterrupt: true,
-      },
-      declinationResponse: {
+      };
+    }
+
+    if (this.confirmationDeclinedPrompt) {
+      response.declinationResponse = {
         messageGroupsList: [
           {
             message: {
               plainTextMessage: {
-                value: 'OK, I will not proceed.',
+                value: this.confirmationDeclinedPrompt,
               },
             },
           },
         ],
         allowInterrupt: true,
-      },
-    };
+      };
+    }
+
+    return response as CfnBot.IntentConfirmationSettingProperty;
   }
 }
