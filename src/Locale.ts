@@ -3,6 +3,8 @@ import { CfnBot } from 'aws-cdk-lib/aws-lex';
 import { ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Intent } from './Intent';
 import { SlotType } from './SlotType';
+import { Stack } from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 
 export declare type VoiceEngine =
   | 'generative'
@@ -108,11 +110,15 @@ export class Locale {
     };
   }
 
-  public addPermission(botAliasArn: string): void {
+  /**
+   * Allows all bot aliases to invoke the code hook lambda.
+   */
+  public addPermission(scope: Construct, botId: string): void {
+    const { region, account } = Stack.of(scope);
     this.codeHook?.fn.addPermission(`lex-lambda-invoke-${this.localeId}`, {
       principal: new ServicePrincipal('lexv2.amazonaws.com'),
       action: 'lambda:InvokeFunction',
-      sourceArn: botAliasArn,
+      sourceArn: `arn:aws:lex:${region}:${account}:bot-alias/${botId}/*`,
     });
   }
 }
