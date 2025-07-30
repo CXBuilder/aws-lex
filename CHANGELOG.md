@@ -2,6 +2,10 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
+- 1.1.1 - 2025-07-28 ivan.bliskavka
+
+  - Expose `replicaRegions` props for Global Resiliency
+
 - 1.1.0 - 2025-07-10 ivan.bliskavka
 
   - Added Intent `confirmationFailurePrompt` and `fulfillmentFailurePrompt`

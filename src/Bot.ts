@@ -45,6 +45,8 @@ export interface BotProps {
    * @default 0.4
    */
   readonly nluConfidenceThreshold?: number;
+
+  readonly replicaRegions?: string[];
 }
 
 /**
@@ -66,6 +68,7 @@ export class Bot extends Construct {
       idleSessionTtlInSeconds = 300,
       nluConfidenceThreshold = 0.4,
       logGroup,
+      replicaRegions = [],
     } = props;
 
     this.role =
@@ -73,6 +76,12 @@ export class Bot extends Construct {
       new LexRole(this, 'Role', {
         lexLogGroupName: logGroup?.logGroupName,
       });
+
+    const replication = replicaRegions.length
+      ? {
+          replicaRegions: replicaRegions,
+        }
+      : undefined;
 
     this.cfnBot = new CfnBot(this, 'Bot', {
       name: name,
@@ -90,6 +99,7 @@ export class Bot extends Construct {
         botAliasLocaleSettings: this.botAliasLocaleSettings(),
         conversationLogSettings: this.conversationLogSettings('TestBotAlias'),
       },
+      replication,
     });
 
     // A new version is created when the hash of the bot props change.
