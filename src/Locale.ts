@@ -51,7 +51,7 @@ export class Locale {
   description?: string;
 
   /**
-   * @default LexDefaults.engine
+   * @default neural
    */
   engine?: VoiceEngine;
 

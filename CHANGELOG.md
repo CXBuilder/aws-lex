@@ -2,6 +2,11 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
+- 1.1.2 - 2025-07-31 ivan.bliskavka
+
+  - Add a custom resource to update voice engine because `CfnBot` only supports `standard`.
+    - STATUS: Actually, it looks like CfnBot does update the engine. I see the changes in the UI. I cant really tell the difference between voices though.
+
 - 1.1.1 - 2025-07-28 ivan.bliskavka
 
   - Expose `replicaRegions` props for Global Resiliency

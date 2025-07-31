@@ -6,6 +6,7 @@ import { hashCode } from './utils/hashCode';
 import { Locale } from './Locale';
 import { ILogGroup } from 'aws-cdk-lib/aws-logs';
 import { IBucket } from 'aws-cdk-lib/aws-s3';
+import { UpdateVoiceEngine } from './UpdateVoiceEngine';
 
 export interface BotProps {
   /**
@@ -31,10 +32,16 @@ export interface BotProps {
   readonly locales: Locale[];
 
   /**
-   * Allows you to create a role externally.
+   * Allows you to create the lex role externally.
    * Use this if all your bots use the same permissions
    */
   readonly role?: IRole;
+
+  /**
+   * Allows you to inject the role used by the custom resource lambda
+   * The custom resource is used to configure the non-standard voice engine
+   */
+  readonly customResourceRole?: IRole;
 
   /**
    * @default 300
@@ -125,6 +132,25 @@ export class Bot extends Construct {
       botAliasLocaleSettings: this.botAliasLocaleSettings(),
       botVersion: this.cfnBotVersion.attrBotVersion,
       conversationLogSettings: this.conversationLogSettings('live'),
+    });
+
+    // Update Voice Engine (CfnBot does not support changing engine)
+    props.locales.forEach((l) => {
+      if (l.engine === 'standard') {
+        return;
+      }
+      const id = `${l.localeId}EngineUpdate`;
+      const engineUpdate = new UpdateVoiceEngine(this, id, {
+        botId: this.cfnBot.attrId,
+        description: l.description,
+        localeId: l.localeId,
+        nluIntentConfidenceThreshold: nluConfidenceThreshold,
+        voiceId: l.voiceId,
+        engine: l.engine ?? 'neural',
+        customResourceRole: props.customResourceRole,
+      });
+      this.cfnBotVersion.node.addDependency(engineUpdate);
+      this.cfnBotAlias.node.addDependency(engineUpdate);
     });
 
     // Allow bot alias to invoke function(s)

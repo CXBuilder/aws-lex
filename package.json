@@ -1,6 +1,6 @@
 {
   "name": "@cxbuilder/aws-lex",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "description": "Higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK",
   "author": {
@@ -67,6 +67,12 @@
     "ts-node": "^10.9.2",
     "typescript": "~5.6.3"
   },
+  "dependencies": {
+    "@aws-sdk/client-lex-models-v2": "^3.858.0"
+  },
+  "bundledDependencies": [
+    "@aws-sdk/client-lex-models-v2"
+  ],
   "peerDependencies": {
     "aws-cdk-lib": "2.194.0",
     "constructs": "^10.0.0"
