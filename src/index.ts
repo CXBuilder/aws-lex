@@ -5,3 +5,4 @@ export * from './LexRole';
 export * from './Locale';
 export * from './Slot';
 export * from './SlotType';
+export * from './utils/throttleDeploy';

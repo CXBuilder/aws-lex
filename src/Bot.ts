@@ -4,14 +4,16 @@ import { Construct } from 'constructs';
 import { LexRole } from './LexRole';
 import { hashCode } from './utils/hashCode';
 import { Locale } from './Locale';
-import { ILogGroup } from 'aws-cdk-lib/aws-logs';
+import { ILogGroup, LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { IBucket } from 'aws-cdk-lib/aws-s3';
+import { RemovalPolicy } from 'aws-cdk-lib';
 
 export interface BotProps {
   /**
-   * If provided, bot will send lex logs
+   * A log group will be created by default.
+   * Pass in ILogGroup to customize. Disable by passing in false.
    */
-  readonly logGroup?: ILogGroup;
+  readonly logGroup?: ILogGroup | false;
 
   /**
    * If provided, bot will record audio
@@ -67,9 +69,20 @@ export class Bot extends Construct {
       locales,
       idleSessionTtlInSeconds = 300,
       nluConfidenceThreshold = 0.4,
-      logGroup,
       replicaRegions = [],
     } = props;
+
+    let logGroup: ILogGroup | undefined;
+    if (props.logGroup !== false) {
+      // Create log group if not provided
+      logGroup =
+        props.logGroup ??
+        new LogGroup(this, 'LogGroup', {
+          logGroupName: `/aws/lex/${name}`,
+          retention: RetentionDays.SIX_MONTHS,
+          removalPolicy: RemovalPolicy.DESTROY,
+        });
+    }
 
     this.role =
       props.role ??

@@ -2,6 +2,11 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
+- 1.2.0 - 2025-08-22 ivan.bliskavka
+
+  - Create a bot log group by default. Pass `false` to disable.
+  - Add `throttleDeploy` function to handle Lex API throttling issues when deploying multiple bots.
+
 - 1.1.1 - 2025-07-28 ivan.bliskavka
 
   - Expose `replicaRegions` props for Global Resiliency

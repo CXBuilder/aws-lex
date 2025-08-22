@@ -157,6 +157,12 @@ While this library simplifies common use cases, you can still leverage the full 
 
 In these cases, you can either extend the library classes or drop down to the L1 constructs as needed.
 
+## Utilities
+
+### throttleDeploy
+
+Deploying multiple Lex bots in parallel can hit AWS Lex API limits, causing deployment failures. This function solves that by controlling deployment concurrency through dependency chains, organizing bots into batches where each batch deploys sequentially while different batches can still deploy in parallel.
+
 ## License
 
 MIT
