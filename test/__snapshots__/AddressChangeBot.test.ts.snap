@@ -287,6 +287,15 @@ exports[`AddressChangeBot matches snapshot 1`] = `
       },
       "Type": "AWS::Lex::Bot",
     },
+    "AddressChangeBotLogGroupFD848490": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "LogGroupName": "/aws/lex/test-address-change-bot",
+        "RetentionInDays": 180,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
     "AddressChangeBotRole5F576B97": {
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -331,7 +340,11 @@ exports[`AddressChangeBot matches snapshot 1`] = `
                     {
                       "Ref": "AWS::AccountId",
                     },
-                    ":log-group:*:log-stream:*",
+                    ":log-group:",
+                    {
+                      "Ref": "AddressChangeBotLogGroupFD848490",
+                    },
+                    ":log-stream:*",
                   ],
                 ],
               },

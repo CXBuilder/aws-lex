@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Template, Match } from 'aws-cdk-lib/assertions';
-import AddressChangeBot from './AddressChangeBot';
+import { AddressChangeBot } from './AddressChangeBot';
 
 describe('AddressChangeBot', () => {
   let app: cdk.App;
@@ -10,7 +10,7 @@ describe('AddressChangeBot', () => {
   beforeEach(() => {
     app = new cdk.App();
     stack = new cdk.Stack(app, 'TestStack');
-    new AddressChangeBot(stack, {
+    new AddressChangeBot(stack, 'AddressChange', {
       name: 'test-address-change-bot',
     });
     template = Template.fromStack(stack);
