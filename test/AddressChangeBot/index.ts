@@ -8,12 +8,12 @@ import { Bot, Intent, Locale, Slot } from '../../src';
  * ALERT: This is more of beta/starter. You may need a custom slot type for the street.
  * Sample created from: https://aws.amazon.com/blogs/contact-center/updating-your-addresses-with-amazon-connect-and-amazon-lex/
  */
-export default class AddressChangeBot extends Construct {
+export class AddressChangeBot extends Construct {
   readonly lambda: NodejsFunction;
   readonly bot: Bot;
 
-  constructor(scope: Construct, props: { name: string }) {
-    super(scope, 'AddressChange');
+  constructor(scope: Construct, id: string, props: { name: string }) {
+    super(scope, id);
 
     this.lambda = new NodejsFunction(this, 'Lambda', {
       entry: resolve(__dirname, 'handler.ts'),
