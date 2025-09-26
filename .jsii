@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "aws-cdk-lib": "2.194.0",
-    "constructs": "^10.0.0"
+    "cdk-nag": "^2.37.9",
+    "constructs": "^10.0.5"
   },
   "dependencyClosure": {
     "@aws-cdk/asset-awscli-v1": {
@@ -3922,6 +3923,78 @@
         }
       }
     },
+    "cdk-nag": {
+      "submodules": {
+        "cdk-nag.rules": {},
+        "cdk-nag.rules.apigw": {},
+        "cdk-nag.rules.appsync": {},
+        "cdk-nag.rules.autoscaling": {},
+        "cdk-nag.rules.cloud9": {},
+        "cdk-nag.rules.cloudfront": {},
+        "cdk-nag.rules.cloudtrail": {},
+        "cdk-nag.rules.cloudwatch": {},
+        "cdk-nag.rules.codebuild": {},
+        "cdk-nag.rules.cognito": {},
+        "cdk-nag.rules.dms": {},
+        "cdk-nag.rules.documentdb": {},
+        "cdk-nag.rules.dynamodb": {},
+        "cdk-nag.rules.ec2": {},
+        "cdk-nag.rules.ecr": {},
+        "cdk-nag.rules.ecs": {},
+        "cdk-nag.rules.efs": {},
+        "cdk-nag.rules.eks": {},
+        "cdk-nag.rules.elasticache": {},
+        "cdk-nag.rules.elasticbeanstalk": {},
+        "cdk-nag.rules.elb": {},
+        "cdk-nag.rules.emr": {},
+        "cdk-nag.rules.eventbridge": {},
+        "cdk-nag.rules.glue": {},
+        "cdk-nag.rules.iam": {},
+        "cdk-nag.rules.kinesis": {},
+        "cdk-nag.rules.kms": {},
+        "cdk-nag.rules.lambda": {},
+        "cdk-nag.rules.lex": {},
+        "cdk-nag.rules.mediastore": {},
+        "cdk-nag.rules.msk": {},
+        "cdk-nag.rules.neptune": {},
+        "cdk-nag.rules.opensearch": {},
+        "cdk-nag.rules.quicksight": {},
+        "cdk-nag.rules.rds": {},
+        "cdk-nag.rules.redshift": {},
+        "cdk-nag.rules.s3": {},
+        "cdk-nag.rules.sagemaker": {},
+        "cdk-nag.rules.secretsmanager": {},
+        "cdk-nag.rules.sns": {},
+        "cdk-nag.rules.sqs": {},
+        "cdk-nag.rules.stepfunctions": {},
+        "cdk-nag.rules.timestream": {},
+        "cdk-nag.rules.vpc": {},
+        "cdk-nag.rules.waf": {}
+      },
+      "targets": {
+        "dotnet": {
+          "namespace": "Cdklabs.CdkNag",
+          "packageId": "Cdklabs.CdkNag"
+        },
+        "go": {
+          "moduleName": "github.com/cdklabs/cdk-nag-go"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdknag",
+            "groupId": "io.github.cdklabs"
+          },
+          "package": "io.github.cdklabs.cdknag"
+        },
+        "js": {
+          "npm": "cdk-nag"
+        },
+        "python": {
+          "distName": "cdk-nag",
+          "module": "cdk_nag"
+        }
+      }
+    },
     "constructs": {
       "targets": {
         "dotnet": {
@@ -3979,7 +4052,7 @@
   },
   "name": "@cxbuilder/aws-lex",
   "readme": {
-    "markdown": "# @cxbuilder/aws-lex\n\n## Overview\n\nThe `@cxbuilder/aws-lex` package provides higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK. It significantly simplifies the process of building conversational interfaces with Amazon Lex by abstracting away the complexity of the AWS LexV2 L1 constructs.\n\n## Why Use This Library?\n\nAWS LexV2 L1 constructs are notoriously difficult to understand and use correctly. They require deep knowledge of the underlying CloudFormation resources and complex property structures. This library addresses these challenges by:\n\n- **Simplifying the API**: Providing an intuitive, object-oriented interface for defining bots, intents, slots, and locales\n- **Automating best practices**: Handling versioning and alias management automatically\n- **Reducing boilerplate**: Eliminating repetitive code for common bot configurations\n- **Improving maintainability**: Using classes with encapsulated transformation logic instead of complex nested objects\n\n## Key Features\n\n- **Automatic versioning**: Creates a bot version and associates it with the `live` alias when input changes\n- **Simplified intent creation**: Define intents with utterances and slots using a clean, declarative syntax\n- **Multi-locale support**: Easily create bots that support multiple languages\n- **Lambda integration**: Streamlined setup for dialog and fulfillment Lambda hooks\n- **Extensible design**: For complex use cases, you can always drop down to L1 constructs or fork the repository\n\n## Getting Started\n\nPlease review the [examples](./docs/examples.md) for a CDK implementation of a simple yes-no bot in English and Spanish\n\n## Architecture\n\nThe library uses a class-based approach with the following main components:\n\n- **Bot**: The main construct that creates the Lex bot resource\n- **Locale**: Configures language-specific settings and resources\n- **Intent**: Defines conversational intents with utterances and slots\n- **Slot**: Defines input parameters for intents\n- **SlotType**: Defines custom slot types with enumeration values\n\n## Advanced Usage\n\nWhile this library simplifies common use cases, you can still leverage the full power of AWS LexV2 for complex scenarios:\n\n- **Rich responses**: For bots that use cards and complex response types\n- **Custom dialog management**: For sophisticated conversation flows\n- **Advanced slot validation**: For complex input validation requirements\n\nIn these cases, you can either extend the library classes or drop down to the L1 constructs as needed.\n\n## License\n\nMIT\n"
+    "markdown": "# @cxbuilder/aws-lex\n\n[![CI/CD Pipeline](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml)\n[![npm version](https://badge.fury.io/js/@cxbuilder%2Faws-lex.svg)](https://badge.fury.io/js/@cxbuilder%2Faws-lex)\n[![PyPI version](https://badge.fury.io/py/cxbuilder-aws-lex.svg)](https://badge.fury.io/py/cxbuilder-aws-lex)\n[![View on Construct Hub](https://constructs.dev/badge?package=%40cxbuilder%2Faws-lex)](https://constructs.dev/packages/@cxbuilder/aws-lex)\n\n## Overview\n\nThe `@cxbuilder/aws-lex` package provides higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK. It significantly simplifies the process of building conversational interfaces with Amazon Lex by abstracting away the complexity of the AWS LexV2 L1 constructs.\n\n## Why Use This Library?\n\nAWS LexV2 L1 constructs are notoriously difficult to understand and use correctly. They require deep knowledge of the underlying CloudFormation resources and complex property structures. This library addresses these challenges by:\n\n- **Simplifying the API**: Providing an intuitive, object-oriented interface for defining bots, intents, slots, and locales\n- **Automating best practices**: Handling versioning and alias management automatically\n- **Reducing boilerplate**: Eliminating repetitive code for common bot configurations\n- **Improving maintainability**: Using classes with encapsulated transformation logic instead of complex nested objects\n\n## Key Features\n\n- **Automatic versioning**: Creates a bot version and associates it with the `live` alias when input changes\n- **Simplified intent creation**: Define intents with utterances and slots using a clean, declarative syntax\n- **Multi-locale support**: Easily create bots that support multiple languages\n- **Lambda integration**: Streamlined setup for dialog and fulfillment Lambda hooks\n- **Extensible design**: For complex use cases, you can always drop down to L1 constructs or fork the repository\n\n## Installation\n\n### Node.js\n\n```bash\nnpm install @cxbuilder/aws-lex\n```\n\n### Python\n\n```bash\npip install cxbuilder-aws-lex\n```\n\n## Quick Start\n\nCreate a simple yes/no bot with multi-language support:\n\n### TypeScript\n\n```typescript\nimport { App, Stack } from 'aws-cdk-lib';\nimport { Bot, Intent, Locale } from '@cxbuilder/aws-lex';\n\nconst app = new App();\nconst stack = new Stack(app, 'MyLexStack');\n\nnew Bot(stack, 'YesNoBot', {\n  name: 'my-yes-no-bot',\n  locales: [\n    new Locale({\n      localeId: 'en_US',\n      voiceId: 'Joanna',\n      intents: [\n        new Intent({\n          name: 'Yes',\n          utterances: ['yes', 'yeah', 'yep', 'absolutely', 'of course'],\n        }),\n        new Intent({\n          name: 'No',\n          utterances: ['no', 'nope', 'never', 'absolutely not', 'no way'],\n        }),\n      ],\n    }),\n    new Locale({\n      localeId: 'es_US',\n      voiceId: 'Lupe',\n      intents: [\n        new Intent({\n          name: 'Yes',\n          utterances: ['sí', 'claro', 'por supuesto', 'correcto', 'exacto'],\n        }),\n        new Intent({\n          name: 'No',\n          utterances: ['no', 'para nada', 'negativo', 'jamás', 'en absoluto'],\n        }),\n      ],\n    }),\n  ],\n});\n```\n\n## Advanced Example: Bot with Slots and Lambda Integration\n\n```typescript\nimport { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';\nimport { Bot, Intent, Locale, Slot } from '@cxbuilder/aws-lex';\n\nconst fulfillmentLambda = new NodejsFunction(stack, 'Handler', {\n  entry: './src/bot-handler.ts',\n});\n\nnew Bot(stack, 'BookingBot', {\n  name: 'hotel-booking-bot',\n  locales: [\n    new Locale({\n      localeId: 'en_US',\n      voiceId: 'Joanna',\n      codeHook: {\n        fn: fulfillmentLambda,\n        fulfillment: true,\n      },\n      intents: [\n        new Intent({\n          name: 'BookHotel',\n          utterances: [\n            'I want to book a room',\n            'Book a hotel for {checkInDate}',\n            'I need a room in {city}',\n          ],\n          slots: [\n            new Slot({\n              name: 'city',\n              slotTypeName: 'AMAZON.City',\n              elicitationMessages: ['Which city would you like to visit?'],\n              required: true,\n            }),\n            new Slot({\n              name: 'checkInDate',\n              slotTypeName: 'AMAZON.Date',\n              elicitationMessages: ['What date would you like to check in?'],\n              required: true,\n            }),\n          ],\n        }),\n      ],\n    }),\n  ],\n});\n```\n\n## Architecture\n\nThe library uses a class-based approach with the following main components:\n\n- **Bot**: The main construct that creates the Lex bot resource\n- **Locale**: Configures language-specific settings and resources\n- **Intent**: Defines conversational intents with utterances and slots\n- **Slot**: Defines input parameters for intents\n- **SlotType**: Defines custom slot types with enumeration values\n\n## Advanced Usage\n\nWhile this library simplifies common use cases, you can still leverage the full power of AWS LexV2 for complex scenarios:\n\n- **Rich responses**: For bots that use cards and complex response types\n- **Custom dialog management**: For sophisticated conversation flows\n- **Advanced slot validation**: For complex input validation requirements\n\nIn these cases, you can either extend the library classes or drop down to the L1 constructs as needed.\n\n## Utilities\n\n### throttleDeploy\n\nDeploying multiple Lex bots in parallel can hit AWS Lex API limits, causing deployment failures. This function solves that by controlling deployment concurrency through dependency chains, organizing bots into batches where each batch deploys sequentially while different batches can still deploy in parallel.\n\n## License\n\nMIT\n"
   },
   "repository": {
     "type": "git",
@@ -4014,7 +4087,7 @@
         },
         "locationInModule": {
           "filename": "src/Bot.ts",
-          "line": 59
+          "line": 64
         },
         "parameters": [
           {
@@ -4040,7 +4113,7 @@
       "kind": "class",
       "locationInModule": {
         "filename": "src/Bot.ts",
-        "line": 53
+        "line": 57
       },
       "methods": [
         {
@@ -4049,7 +4122,7 @@
           },
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 140
+            "line": 163
           },
           "name": "conversationLogSettings",
           "parameters": [
@@ -4077,7 +4150,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 55
+            "line": 59
           },
           "name": "cfnBot",
           "type": {
@@ -4091,7 +4164,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 57
+            "line": 61
           },
           "name": "cfnBotAlias",
           "type": {
@@ -4105,7 +4178,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 56
+            "line": 60
           },
           "name": "cfnBotVersion",
           "type": {
@@ -4119,11 +4192,26 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 54
+            "line": 58
           },
           "name": "role",
           "type": {
             "fqn": "aws-cdk-lib.aws_iam.IRole"
+          }
+        },
+        {
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/Bot.ts",
+            "line": 62
+          },
+          "name": "logGroup",
+          "optional": true,
+          "type": {
+            "fqn": "aws-cdk-lib.aws_logs.ILogGroup"
           }
         }
       ],
@@ -4139,7 +4227,7 @@
       "kind": "interface",
       "locationInModule": {
         "filename": "src/Bot.ts",
-        "line": 10
+        "line": 11
       },
       "name": "BotProps",
       "properties": [
@@ -4151,7 +4239,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 31
+            "line": 33
           },
           "name": "locales",
           "type": {
@@ -4172,7 +4260,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 24
+            "line": 26
           },
           "name": "name",
           "type": {
@@ -4188,7 +4276,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 19
+            "line": 21
           },
           "name": "audioBucket",
           "optional": true,
@@ -4205,7 +4293,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 29
+            "line": 31
           },
           "name": "description",
           "optional": true,
@@ -4222,7 +4310,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 42
+            "line": 44
           },
           "name": "idleSessionTtlInSeconds",
           "optional": true,
@@ -4233,18 +4321,28 @@
         {
           "abstract": true,
           "docs": {
+            "remarks": "Pass in ILogGroup to customize. Disable by passing in false.",
             "stability": "stable",
-            "summary": "If provided, bot will send lex logs."
+            "summary": "A log group will be created by default."
           },
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 14
+            "line": 16
           },
           "name": "logGroup",
           "optional": true,
           "type": {
-            "fqn": "aws-cdk-lib.aws_logs.ILogGroup"
+            "union": {
+              "types": [
+                {
+                  "primitive": "boolean"
+                },
+                {
+                  "fqn": "aws-cdk-lib.aws_logs.ILogGroup"
+                }
+              ]
+            }
           }
         },
         {
@@ -4256,12 +4354,33 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 47
+            "line": 49
           },
           "name": "nluConfidenceThreshold",
           "optional": true,
           "type": {
             "primitive": "number"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/Bot.ts",
+            "line": 51
+          },
+          "name": "replicaRegions",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
           }
         },
         {
@@ -4274,7 +4393,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 37
+            "line": 39
           },
           "name": "role",
           "optional": true,
@@ -4297,7 +4416,7 @@
         },
         "locationInModule": {
           "filename": "src/Intent.ts",
-          "line": 30
+          "line": 42
         },
         "parameters": [
           {
@@ -4311,7 +4430,7 @@
       "kind": "class",
       "locationInModule": {
         "filename": "src/Intent.ts",
-        "line": 12
+        "line": 14
       },
       "methods": [
         {
@@ -4320,7 +4439,7 @@
           },
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 38
+            "line": 52
           },
           "name": "toCdk",
           "parameters": [
@@ -4352,7 +4471,7 @@
           },
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 13
+            "line": 15
           },
           "name": "name",
           "type": {
@@ -4365,7 +4484,7 @@
           },
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 14
+            "line": 16
           },
           "name": "utterances",
           "type": {
@@ -4380,13 +4499,43 @@
         {
           "docs": {
             "stability": "stable",
+            "summary": "If provided, lex will speak this when confirmation is declined."
+          },
+          "locationInModule": {
+            "filename": "src/Intent.ts",
+            "line": 30
+          },
+          "name": "confirmationDeclinedPrompt",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "stable",
             "summary": "If provided, lex will confirm the intent."
           },
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 23
+            "line": 25
           },
           "name": "confirmationPrompt",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "stable",
+            "summary": "If provided, lex will speak this when the intent fulfillment fails."
+          },
+          "locationInModule": {
+            "filename": "src/Intent.ts",
+            "line": 40
+          },
+          "name": "fulfillmentFailurePrompt",
           "optional": true,
           "type": {
             "primitive": "string"
@@ -4399,7 +4548,7 @@
           },
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 28
+            "line": 35
           },
           "name": "fulfillmentPrompt",
           "optional": true,
@@ -4414,7 +4563,7 @@
           },
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 18
+            "line": 20
           },
           "name": "slots",
           "optional": true,
@@ -4487,6 +4636,22 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Intent.ts",
+            "line": 9
+          },
+          "name": "confirmationFailurePrompt",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/Intent.ts",
             "line": 8
           },
           "name": "confirmationPrompt",
@@ -4503,7 +4668,23 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Intent.ts",
-            "line": 9
+            "line": 11
+          },
+          "name": "fulfillmentFailurePrompt",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/Intent.ts",
+            "line": 10
           },
           "name": "fulfillmentPrompt",
           "optional": true,
@@ -4643,7 +4824,7 @@
         },
         "locationInModule": {
           "filename": "src/Locale.ts",
-          "line": 71
+          "line": 73
         },
         "parameters": [
           {
@@ -4657,21 +4838,28 @@
       "kind": "class",
       "locationInModule": {
         "filename": "src/Locale.ts",
-        "line": 39
+        "line": 41
       },
       "methods": [
         {
           "docs": {
-            "stability": "stable"
+            "stability": "stable",
+            "summary": "Allows all bot aliases to invoke the code hook lambda."
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 111
+            "line": 116
           },
           "name": "addPermission",
           "parameters": [
             {
-              "name": "botAliasArn",
+              "name": "scope",
+              "type": {
+                "fqn": "constructs.Construct"
+              }
+            },
+            {
+              "name": "botId",
               "type": {
                 "primitive": "string"
               }
@@ -4684,7 +4872,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 82
+            "line": 84
           },
           "name": "toCdk",
           "parameters": [
@@ -4710,7 +4898,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 40
+            "line": 42
           },
           "name": "localeId",
           "type": {
@@ -4723,7 +4911,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 47
+            "line": 49
           },
           "name": "voiceId",
           "type": {
@@ -4737,7 +4925,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 69
+            "line": 71
           },
           "name": "codeHook",
           "optional": true,
@@ -4751,7 +4939,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 49
+            "line": 51
           },
           "name": "description",
           "optional": true,
@@ -4766,7 +4954,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 54
+            "line": 56
           },
           "name": "engine",
           "optional": true,
@@ -4781,7 +4969,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 59
+            "line": 61
           },
           "name": "intents",
           "optional": true,
@@ -4801,7 +4989,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 45
+            "line": 47
           },
           "name": "nluConfidenceThreshold",
           "optional": true,
@@ -4816,7 +5004,7 @@
           },
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 64
+            "line": 66
           },
           "name": "slotTypes",
           "optional": true,
@@ -4842,26 +5030,10 @@
       "kind": "interface",
       "locationInModule": {
         "filename": "src/Locale.ts",
-        "line": 13
+        "line": 15
       },
       "name": "LocaleCodeHook",
       "properties": [
-        {
-          "abstract": true,
-          "docs": {
-            "stability": "stable",
-            "summary": "Whether to invoke the lambda for each dialog turn."
-          },
-          "immutable": true,
-          "locationInModule": {
-            "filename": "src/Locale.ts",
-            "line": 21
-          },
-          "name": "dialog",
-          "type": {
-            "primitive": "boolean"
-          }
-        },
         {
           "abstract": true,
           "docs": {
@@ -4871,11 +5043,28 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 17
+            "line": 19
           },
           "name": "fn",
           "type": {
             "fqn": "aws-cdk-lib.aws_lambda.IFunction"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable",
+            "summary": "Whether to invoke the lambda for each dialog turn."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/Locale.ts",
+            "line": 23
+          },
+          "name": "dialog",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
           }
         },
         {
@@ -4887,7 +5076,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 25
+            "line": 27
           },
           "name": "fulfillment",
           "optional": true,
@@ -4908,7 +5097,7 @@
       "kind": "interface",
       "locationInModule": {
         "filename": "src/Locale.ts",
-        "line": 28
+        "line": 30
       },
       "name": "LocaleProps",
       "properties": [
@@ -4920,7 +5109,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 29
+            "line": 31
           },
           "name": "localeId",
           "type": {
@@ -4935,7 +5124,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 31
+            "line": 33
           },
           "name": "voiceId",
           "type": {
@@ -4950,7 +5139,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 36
+            "line": 38
           },
           "name": "codeHook",
           "optional": true,
@@ -4966,7 +5155,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 32
+            "line": 34
           },
           "name": "description",
           "optional": true,
@@ -4982,7 +5171,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 33
+            "line": 35
           },
           "name": "engine",
           "optional": true,
@@ -4998,7 +5187,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 34
+            "line": 36
           },
           "name": "intents",
           "optional": true,
@@ -5019,7 +5208,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 30
+            "line": 32
           },
           "name": "nluConfidenceThreshold",
           "optional": true,
@@ -5035,7 +5224,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Locale.ts",
-            "line": 35
+            "line": 37
           },
           "name": "slotTypes",
           "optional": true,
@@ -5588,6 +5777,6 @@
       "symbolId": "src/SlotType:SlotTypeValue"
     }
   },
-  "version": "1.0.0",
-  "fingerprint": "zOGX3OlyXlt8vRgrtfPJRk/Xo3JEUHBv0/ONSyV2yK4="
+  "version": "1.2.1",
+  "fingerprint": "0ztv33PP4NqfSQW7oe5tW/5He3A0TeYfju64piRhiPg="
 }

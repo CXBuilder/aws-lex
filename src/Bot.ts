@@ -59,6 +59,7 @@ export class Bot extends Construct {
   readonly cfnBot: CfnBot;
   readonly cfnBotVersion: CfnBotVersion;
   readonly cfnBotAlias: CfnBotAlias;
+  readonly logGroup?: ILogGroup;
 
   constructor(scope: Construct, id: string, private readonly props: BotProps) {
     super(scope, id);
@@ -72,10 +73,9 @@ export class Bot extends Construct {
       replicaRegions = [],
     } = props;
 
-    let logGroup: ILogGroup | undefined;
     if (props.logGroup !== false) {
       // Create log group if not provided
-      logGroup =
+      this.logGroup =
         props.logGroup ??
         new LogGroup(this, 'LogGroup', {
           logGroupName: `/aws/lex/${name}`,
@@ -87,7 +87,7 @@ export class Bot extends Construct {
     this.role =
       props.role ??
       new LexRole(this, 'Role', {
-        lexLogGroupName: logGroup?.logGroupName,
+        lexLogGroupName: this.logGroup?.logGroupName,
       });
 
     const replication = replicaRegions.length
@@ -163,19 +163,19 @@ export class Bot extends Construct {
   conversationLogSettings(
     aliasName: string
   ): CfnBotAlias.ConversationLogSettingsProperty | undefined {
-    const { logGroup, audioBucket, name } = this.props;
-    if (!logGroup && !audioBucket) {
+    const { audioBucket, name } = this.props;
+    if (!this.logGroup && !audioBucket) {
       return;
     }
 
     return {
-      textLogSettings: logGroup
+      textLogSettings: this.logGroup
         ? [
             {
               enabled: true,
               destination: {
                 cloudWatch: {
-                  cloudWatchLogGroupArn: logGroup.logGroupArn,
+                  cloudWatchLogGroupArn: this.logGroup.logGroupArn,
                   logPrefix: `${name}/${aliasName}`,
                 },
               },
