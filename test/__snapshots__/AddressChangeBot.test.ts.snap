@@ -44,6 +44,24 @@ exports[`AddressChangeBot matches snapshot 1`] = `
             "BotVersion",
           ],
         },
+        "ConversationLogSettings": {
+          "TextLogSettings": [
+            {
+              "Destination": {
+                "CloudWatch": {
+                  "CloudWatchLogGroupArn": {
+                    "Fn::GetAtt": [
+                      "AddressChangeBotLogGroupFD848490",
+                      "Arn",
+                    ],
+                  },
+                  "LogPrefix": "test-address-change-bot/live",
+                },
+              },
+              "Enabled": true,
+            },
+          ],
+        },
       },
       "Type": "AWS::Lex::BotAlias",
     },
@@ -283,6 +301,24 @@ exports[`AddressChangeBot matches snapshot 1`] = `
               "LocaleId": "en_US",
             },
           ],
+          "ConversationLogSettings": {
+            "TextLogSettings": [
+              {
+                "Destination": {
+                  "CloudWatch": {
+                    "CloudWatchLogGroupArn": {
+                      "Fn::GetAtt": [
+                        "AddressChangeBotLogGroupFD848490",
+                        "Arn",
+                      ],
+                    },
+                    "LogPrefix": "test-address-change-bot/TestBotAlias",
+                  },
+                },
+                "Enabled": true,
+              },
+            ],
+          },
         },
       },
       "Type": "AWS::Lex::Bot",

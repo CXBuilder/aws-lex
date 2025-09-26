@@ -2,6 +2,10 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
+- 1.2.1 - 2025-09-26 ivan.bliskavka
+
+  - Fixed bug. Conversation log was not configured if LogGroup parameter was not passed in.
+
 - 1.2.0 - 2025-08-22 ivan.bliskavka
 
   - Create a bot log group by default. Pass `false` to disable.

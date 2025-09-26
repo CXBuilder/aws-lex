@@ -39,6 +39,24 @@ exports[`YesNoBot matches snapshot 1`] = `
             "BotVersion",
           ],
         },
+        "ConversationLogSettings": {
+          "TextLogSettings": [
+            {
+              "Destination": {
+                "CloudWatch": {
+                  "CloudWatchLogGroupArn": {
+                    "Fn::GetAtt": [
+                      "YesNoLogGroup221655BB",
+                      "Arn",
+                    ],
+                  },
+                  "LogPrefix": "cxbuilder-yes-no/live",
+                },
+              },
+              "Enabled": true,
+            },
+          ],
+        },
       },
       "Type": "AWS::Lex::BotAlias",
     },
@@ -303,6 +321,24 @@ exports[`YesNoBot matches snapshot 1`] = `
               "LocaleId": "es_US",
             },
           ],
+          "ConversationLogSettings": {
+            "TextLogSettings": [
+              {
+                "Destination": {
+                  "CloudWatch": {
+                    "CloudWatchLogGroupArn": {
+                      "Fn::GetAtt": [
+                        "YesNoLogGroup221655BB",
+                        "Arn",
+                      ],
+                    },
+                    "LogPrefix": "cxbuilder-yes-no/TestBotAlias",
+                  },
+                },
+                "Enabled": true,
+              },
+            ],
+          },
         },
       },
       "Type": "AWS::Lex::Bot",
