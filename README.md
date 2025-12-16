@@ -157,6 +157,95 @@ While this library simplifies common use cases, you can still leverage the full 
 
 In these cases, you can either extend the library classes or drop down to the L1 constructs as needed.
 
+## Bot Replication
+
+When Lex replication is enabled, the Lex service automatically replicates the bot configuration to the replica region. However, the following resources are **not** automatically replicated:
+
+- Lambda handler permissions
+- Amazon Connect instance associations
+- Conversation log group configurations
+
+The `BotReplica` construct handles creating these resources in the replica region.
+
+### Example: Multi-Region Bot Setup
+
+```typescript
+import { App, Stack } from 'aws-cdk-lib';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Bot, BotReplica, Intent, Locale } from '@cxbuilder/aws-lex';
+
+const app = new App();
+
+// Primary region (us-east-1)
+class EastStack extends Stack {
+  public readonly bot: Bot;
+  public readonly botHandler: NodejsFunction;
+
+  constructor(scope: App, id: string) {
+    super(scope, id, { env: { region: 'us-east-1' } });
+
+    this.botHandler = new NodejsFunction(this, 'BotHandler', {
+      entry: './src/bot-handler.ts',
+    });
+
+    this.bot = new Bot(this, 'MyBot', {
+      name: 'customer-service-bot',
+      handler: this.botHandler,
+      replicaRegions: ['us-west-2'],
+      connectInstanceArn:
+        'arn:aws:connect:us-east-1:123456789012:instance/abc123',
+      locales: [
+        new Locale({
+          localeId: 'en_US',
+          voiceId: 'Joanna',
+          intents: [
+            new Intent({
+              name: 'GetHelp',
+              utterances: ['I need help', 'Can you help me'],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+}
+
+// Replica region (us-west-2)
+class WestStack extends Stack {
+  public readonly botHandler: NodejsFunction;
+  public readonly botReplica: BotReplica;
+
+  constructor(scope: App, id: string, eastStack: EastStack) {
+    super(scope, id, { env: { region: 'us-west-2' } });
+
+    this.botHandler = new NodejsFunction(this, 'BotHandler', {
+      entry: './src/bot-handler.ts',
+    });
+
+    this.botReplica = new BotReplica(this, 'MyBotReplica', {
+      botName: eastStack.bot.botName,
+      botId: eastStack.bot.botId,
+      botAliasId: eastStack.bot.botAliasId,
+      handler: this.botHandler,
+      connectInstanceArn:
+        'arn:aws:connect:us-west-2:123456789012:instance/abc123',
+    });
+  }
+}
+
+const eastStack = new EastStack(app, 'EastStack');
+const westStack = new WestStack(app, 'WestStack', eastStack);
+```
+
+### BotReplica Properties
+
+- `botName` (required): The name of the bot from the primary region
+- `botId` (required): The bot ID from the primary region
+- `botAliasId` (required): The bot alias ID from the primary region
+- `handler` (optional): Lambda function to use as the bot handler in the replica region
+- `connectInstanceArn` (optional): ARN of the Amazon Connect instance to associate with the bot
+- `logGroup` (optional): Set to `false` to disable automatic log group creation (default: `true`)
+
 ## Utilities
 
 ### throttleDeploy

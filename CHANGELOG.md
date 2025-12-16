@@ -5,6 +5,7 @@
 - 1.3.0 - 2025-12-16 ivan.bliskavka
 
   - Added `connectInstanceArn` to BotProps to simplify Amazon Connect association
+  - Added `BotReplica` to simplify bot configuration in the replica region
 
 - 1.2.1 - 2025-09-26 ivan.bliskavka
 

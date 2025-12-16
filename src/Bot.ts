@@ -165,6 +165,27 @@ export class Bot extends Construct {
     }
   }
 
+  /**
+   * The name of the bot
+   */
+  get botName(): string {
+    return this.props.name;
+  }
+
+  /**
+   * The bot ID
+   */
+  get botId(): string {
+    return this.cfnBot.attrId;
+  }
+
+  /**
+   * The bot alias ID
+   */
+  get botAliasId(): string {
+    return this.cfnBotAlias.attrBotAliasId;
+  }
+
   private botAliasLocaleSettings(): CfnBotAlias.BotAliasLocaleSettingsItemProperty[] {
     return this.props.locales.map((l) => ({
       botAliasLocaleSetting: {
