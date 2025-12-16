@@ -99,6 +99,7 @@ jobs:
         if: steps.check-tag.outputs.exists == 'false'
         run: npm run publish-node
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to PyPI
