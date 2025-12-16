@@ -7,6 +7,11 @@ import { Locale } from './Locale';
 import { ILogGroup, LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { IBucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
+import { CfnIntegrationAssociation } from 'aws-cdk-lib/aws-connect';
+
+/**
+ * Used to configure resources which are not automatically replicated by Lex in replica regions.
+ */
 
 export interface BotProps {
   /**
@@ -48,7 +53,15 @@ export interface BotProps {
    */
   readonly nluConfidenceThreshold?: number;
 
+  /**
+   * Lex Global Resiliency replication region
+   */
   readonly replicaRegions?: string[];
+
+  /**
+   * If provided, associates the bot with the Amazon Connect instance.
+   */
+  readonly connectInstanceArn?: string;
 }
 
 /**
@@ -142,6 +155,35 @@ export class Bot extends Construct {
 
     // Allow bot alias to invoke function(s)
     props.locales.forEach((l) => l.addPermission(this, this.cfnBot.ref));
+
+    if (props.connectInstanceArn) {
+      new CfnIntegrationAssociation(this, 'ConnectIntegration', {
+        instanceId: props.connectInstanceArn,
+        integrationArn: this.cfnBotAlias.attrArn,
+        integrationType: 'LEX_BOT',
+      });
+    }
+  }
+
+  /**
+   * The name of the bot
+   */
+  get botName(): string {
+    return this.props.name;
+  }
+
+  /**
+   * The bot ID
+   */
+  get botId(): string {
+    return this.cfnBot.attrId;
+  }
+
+  /**
+   * The bot alias ID
+   */
+  get botAliasId(): string {
+    return this.cfnBotAlias.attrBotAliasId;
   }
 
   private botAliasLocaleSettings(): CfnBotAlias.BotAliasLocaleSettingsItemProperty[] {
@@ -160,7 +202,7 @@ export class Bot extends Construct {
     }));
   }
 
-  conversationLogSettings(
+  private conversationLogSettings(
     aliasName: string
   ): CfnBotAlias.ConversationLogSettingsProperty | undefined {
     const { audioBucket, name } = this.props;
