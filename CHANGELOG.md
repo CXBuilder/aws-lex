@@ -2,6 +2,10 @@
 
 [Keeping a Changelog](https://keepachangelog.com)
 
+- 1.3.0 - 2025-12-16 ivan.bliskavka
+
+  - Added `connectInstanceArn` to BotProps to simplify Amazon Connect association
+
 - 1.2.1 - 2025-09-26 ivan.bliskavka
 
   - Fixed bug. Conversation log was not configured if LogGroup parameter was not passed in.
