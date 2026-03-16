@@ -3,7 +3,16 @@ import { CfnBot } from 'aws-cdk-lib/aws-lex';
 
 export interface IntentProps {
   readonly name: string;
-  readonly utterances: string[];
+  /**
+   * Sample utterances for this intent.
+   * Optional when parentIntentSignature is provided (built-in intents).
+   */
+  readonly utterances?: string[];
+  /**
+   * Built-in intent signature (e.g. 'AMAZON.QInConnectIntent').
+   * When set, Lex treats this as a built-in intent.
+   */
+  readonly parentIntentSignature?: string;
   readonly slots?: Slot[];
   readonly confirmationPrompt?: string;
   readonly confirmationFailurePrompt?: string;
@@ -13,7 +22,8 @@ export interface IntentProps {
 
 export class Intent {
   name: string;
-  utterances: string[];
+  utterances?: string[];
+  parentIntentSignature?: string;
   /**
    * Slots in priority order
    */
@@ -42,6 +52,7 @@ export class Intent {
   constructor(props: IntentProps) {
     this.name = props.name;
     this.utterances = props.utterances;
+    this.parentIntentSignature = props.parentIntentSignature;
     this.slots = props.slots;
     this.confirmationPrompt = props.confirmationPrompt;
     this.confirmationDeclinedPrompt = props.confirmationFailurePrompt;
@@ -60,7 +71,8 @@ export class Intent {
         enabled: fulfillmentCodeHook,
         postFulfillmentStatusSpecification: this.getPostFulfillmentPrompt(),
       },
-      sampleUtterances: this.utterances.map((u) => ({
+      parentIntentSignature: this.parentIntentSignature,
+      sampleUtterances: this.utterances?.map((u) => ({
         utterance: u,
       })),
       slotPriorities: this.slots?.map((slot, index) => ({
