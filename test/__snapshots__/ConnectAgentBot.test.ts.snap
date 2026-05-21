@@ -1,0 +1,450 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectAgentBot matches snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "BotAD59FDB8": {
+      "Properties": {
+        "AutoBuildBotLocales": false,
+        "BotLocales": [
+          {
+            "Intents": [
+              {
+                "DialogCodeHook": {
+                  "Enabled": false,
+                },
+                "FulfillmentCodeHook": {
+                  "Enabled": false,
+                  "PostFulfillmentStatusSpecification": {
+                    "SuccessResponse": {
+                      "AllowInterrupt": true,
+                      "MessageGroupsList": [
+                        {
+                          "Message": {
+                            "PlainTextMessage": {
+                              "Value": "((x-amz-lex:q-in-connect-response))",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                "Name": "AmazonQinConnect",
+                "ParentIntentSignature": "AMAZON.QInConnectIntent",
+                "QInConnectIntentConfiguration": {
+                  "QInConnectAssistantConfiguration": {
+                    "AssistantArn": "arn:aws:wisdom:us-east-1:123456789012:assistant/de86a602-6ac1-4563-a1cb-d4da2524482c",
+                  },
+                },
+              },
+              {
+                "DialogCodeHook": {
+                  "Enabled": false,
+                },
+                "FulfillmentCodeHook": {
+                  "Enabled": false,
+                },
+                "InitialResponseSetting": {
+                  "CodeHook": {
+                    "EnableCodeHookInvocation": true,
+                    "IsActive": true,
+                    "PostCodeHookSpecification": {
+                      "FailureNextStep": {
+                        "DialogAction": {
+                          "Type": "EndConversation",
+                        },
+                      },
+                      "SuccessNextStep": {
+                        "DialogAction": {
+                          "Type": "EndConversation",
+                        },
+                      },
+                      "TimeoutNextStep": {
+                        "DialogAction": {
+                          "Type": "EndConversation",
+                        },
+                      },
+                    },
+                  },
+                  "NextStep": {
+                    "DialogAction": {
+                      "Type": "InvokeDialogCodeHook",
+                    },
+                  },
+                },
+                "Name": "FallbackIntent",
+                "ParentIntentSignature": "AMAZON.FallbackIntent",
+              },
+            ],
+            "LocaleId": "en_US",
+            "NluConfidenceThreshold": 0.4,
+            "SlotTypes": [],
+            "UnifiedSpeechSettings": {
+              "SpeechFoundationModel": {
+                "ModelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-2-sonic-v1:0",
+                "VoiceId": "Matthew",
+              },
+            },
+          },
+          {
+            "Intents": [
+              {
+                "DialogCodeHook": {
+                  "Enabled": false,
+                },
+                "FulfillmentCodeHook": {
+                  "Enabled": false,
+                  "PostFulfillmentStatusSpecification": {
+                    "SuccessResponse": {
+                      "AllowInterrupt": true,
+                      "MessageGroupsList": [
+                        {
+                          "Message": {
+                            "PlainTextMessage": {
+                              "Value": "((x-amz-lex:q-in-connect-response))",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                "Name": "AmazonQinConnect",
+                "ParentIntentSignature": "AMAZON.QInConnectIntent",
+                "QInConnectIntentConfiguration": {
+                  "QInConnectAssistantConfiguration": {
+                    "AssistantArn": "arn:aws:wisdom:us-east-1:123456789012:assistant/de86a602-6ac1-4563-a1cb-d4da2524482c",
+                  },
+                },
+              },
+              {
+                "DialogCodeHook": {
+                  "Enabled": false,
+                },
+                "FulfillmentCodeHook": {
+                  "Enabled": false,
+                },
+                "InitialResponseSetting": {
+                  "CodeHook": {
+                    "EnableCodeHookInvocation": true,
+                    "IsActive": true,
+                    "PostCodeHookSpecification": {
+                      "FailureNextStep": {
+                        "DialogAction": {
+                          "Type": "EndConversation",
+                        },
+                      },
+                      "SuccessNextStep": {
+                        "DialogAction": {
+                          "Type": "EndConversation",
+                        },
+                      },
+                      "TimeoutNextStep": {
+                        "DialogAction": {
+                          "Type": "EndConversation",
+                        },
+                      },
+                    },
+                  },
+                  "NextStep": {
+                    "DialogAction": {
+                      "Type": "InvokeDialogCodeHook",
+                    },
+                  },
+                },
+                "Name": "FallbackIntent",
+                "ParentIntentSignature": "AMAZON.FallbackIntent",
+              },
+            ],
+            "LocaleId": "es_US",
+            "NluConfidenceThreshold": 0.4,
+            "SlotTypes": [],
+            "UnifiedSpeechSettings": {
+              "SpeechFoundationModel": {
+                "ModelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-2-sonic-v1:0",
+                "VoiceId": "Matthew",
+              },
+            },
+          },
+        ],
+        "BotTags": [
+          {
+            "Key": "AmazonConnectEnabled",
+            "Value": "True",
+          },
+        ],
+        "DataPrivacy": {
+          "ChildDirected": false,
+        },
+        "IdleSessionTTLInSeconds": 300,
+        "Name": "test-agent-bot",
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "BotRole565C6CEB",
+            "Arn",
+          ],
+        },
+        "TestBotAliasSettings": {
+          "BotAliasLocaleSettings": [
+            {
+              "BotAliasLocaleSetting": {
+                "Enabled": true,
+              },
+              "LocaleId": "en_US",
+            },
+            {
+              "BotAliasLocaleSetting": {
+                "Enabled": true,
+              },
+              "LocaleId": "es_US",
+            },
+          ],
+          "ConversationLogSettings": {
+            "TextLogSettings": [
+              {
+                "Destination": {
+                  "CloudWatch": {
+                    "CloudWatchLogGroupArn": {
+                      "Fn::GetAtt": [
+                        "BotLogGroupCA56E8FD",
+                        "Arn",
+                      ],
+                    },
+                    "LogPrefix": "test-agent-bot/TestBotAlias",
+                  },
+                },
+                "Enabled": true,
+              },
+            ],
+          },
+        },
+      },
+      "Type": "AWS::Lex::Bot",
+    },
+    "BotAlias67870AC9": {
+      "Properties": {
+        "BotAliasLocaleSettings": [
+          {
+            "BotAliasLocaleSetting": {
+              "Enabled": true,
+            },
+            "LocaleId": "en_US",
+          },
+          {
+            "BotAliasLocaleSetting": {
+              "Enabled": true,
+            },
+            "LocaleId": "es_US",
+          },
+        ],
+        "BotAliasName": "live",
+        "BotId": {
+          "Fn::GetAtt": [
+            "BotAD59FDB8",
+            "Id",
+          ],
+        },
+        "BotVersion": {
+          "Fn::GetAtt": [
+            "BotVersion41126479839335AD2",
+            "BotVersion",
+          ],
+        },
+        "ConversationLogSettings": {
+          "TextLogSettings": [
+            {
+              "Destination": {
+                "CloudWatch": {
+                  "CloudWatchLogGroupArn": {
+                    "Fn::GetAtt": [
+                      "BotLogGroupCA56E8FD",
+                      "Arn",
+                    ],
+                  },
+                  "LogPrefix": "test-agent-bot/live",
+                },
+              },
+              "Enabled": true,
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Lex::BotAlias",
+    },
+    "BotConnectIntegration3766BAEF": {
+      "Properties": {
+        "InstanceId": "arn:aws:connect:us-east-1:123456789012:instance/abc12345-1234-1234-1234-abcdef123456",
+        "IntegrationArn": {
+          "Fn::GetAtt": [
+            "BotAlias67870AC9",
+            "Arn",
+          ],
+        },
+        "IntegrationType": "LEX_BOT",
+      },
+      "Type": "AWS::Connect::IntegrationAssociation",
+    },
+    "BotLogGroupCA56E8FD": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "LogGroupName": "/aws/lex/test-agent-bot",
+        "RetentionInDays": 180,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "BotRole565C6CEB": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lexv2.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BotRoleDefaultPolicyE4E894E8": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "wisdom:GetAssistant",
+                "wisdom:CreateSession",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:wisdom:us-east-1:123456789012:assistant/de86a602-6ac1-4563-a1cb-d4da2524482c",
+                "arn:aws:wisdom:us-east-1:123456789012:assistant/de86a602-6ac1-4563-a1cb-d4da2524482c/*",
+              ],
+            },
+            {
+              "Action": [
+                "wisdom:SendMessage",
+                "wisdom:GetNextMessage",
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:wisdom:us-east-1:123456789012:session/*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BotRoleDefaultPolicyE4E894E8",
+        "Roles": [
+          {
+            "Ref": "BotRole565C6CEB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BotRoleLexPolicy07A70E3D": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "polly:SynthesizeSpeech",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:logs:us-east-1:123456789012:log-group:",
+                    {
+                      "Ref": "BotLogGroupCA56E8FD",
+                    },
+                    ":log-stream:*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BotRoleLexPolicy07A70E3D",
+        "Roles": [
+          {
+            "Ref": "BotRole565C6CEB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BotVersion41126479839335AD2": {
+      "Properties": {
+        "BotId": {
+          "Fn::GetAtt": [
+            "BotAD59FDB8",
+            "Id",
+          ],
+        },
+        "BotVersionLocaleSpecification": [
+          {
+            "BotVersionLocaleDetails": {
+              "SourceBotVersion": "DRAFT",
+            },
+            "LocaleId": "en_US",
+          },
+          {
+            "BotVersionLocaleDetails": {
+              "SourceBotVersion": "DRAFT",
+            },
+            "LocaleId": "es_US",
+          },
+        ],
+      },
+      "Type": "AWS::Lex::BotVersion",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

@@ -1,5 +1,6 @@
 // Export all classes and interfaces
 export * from './Bot';
+export * from './ConnectAgentBot';
 export * from './BotReplica';
 export * from './Intent';
 export * from './LexRole';
