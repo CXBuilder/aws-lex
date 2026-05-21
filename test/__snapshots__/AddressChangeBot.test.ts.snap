@@ -77,6 +77,7 @@ exports[`AddressChangeBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": true,
+                  "IsActive": true,
                 },
                 "Name": "AddressChange",
                 "SampleUtterances": [
@@ -236,6 +237,7 @@ exports[`AddressChangeBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": true,
+                  "IsActive": true,
                 },
                 "Name": "Agent",
                 "SampleUtterances": [

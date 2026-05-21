@@ -22,6 +22,7 @@ exports[`ConnectAgentBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": false,
+                  "IsActive": true,
                   "PostFulfillmentStatusSpecification": {
                     "SuccessResponse": {
                       "AllowInterrupt": true,
@@ -102,6 +103,7 @@ exports[`ConnectAgentBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": false,
+                  "IsActive": true,
                   "PostFulfillmentStatusSpecification": {
                     "SuccessResponse": {
                       "AllowInterrupt": true,
