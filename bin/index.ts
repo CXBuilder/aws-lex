@@ -32,12 +32,10 @@ throttleDeploy([
     locales: [
       {
         localeId: 'en_US',
-        voiceId: 'Danielle',
         speechFoundationModelArn,
       },
       {
         localeId: 'es_US',
-        voiceId: 'Lupe',
         speechFoundationModelArn,
       },
     ],

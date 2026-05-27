@@ -6,7 +6,7 @@ import { Bot, Intent, Locale } from '.';
 
 export interface ConnectAgentBotLocale {
   readonly localeId: string;
-  readonly voiceId: string;
+  readonly voiceId?: string;
   /**
    * @default amazon.nova-2-sonic-v1:0
    */
@@ -22,12 +22,7 @@ export interface ConnectAgentBotProps {
 
 export class ConnectAgentBot extends Bot {
   constructor(scope: Construct, id: string, props: ConnectAgentBotProps) {
-    const {
-      name,
-      assistantArn,
-      locales,
-      connectInstanceArn,
-    } = props;
+    const { name, assistantArn, locales, connectInstanceArn } = props;
 
     const qInConnectIntent = new Intent({
       name: 'AmazonQinConnect',
@@ -58,7 +53,11 @@ export class ConnectAgentBot extends Bot {
       name,
       connectInstanceArn,
       locales: locales.map(
-        ({ localeId, voiceId, speechFoundationModelArn = `arn:aws:bedrock:${Stack.of(scope).region}::foundation-model/amazon.nova-2-sonic-v1:0` }) =>
+        ({
+          localeId,
+          voiceId,
+          speechFoundationModelArn = `arn:aws:bedrock:${Stack.of(scope).region}::foundation-model/amazon.nova-2-sonic-v1:0`,
+        }) =>
           new Locale({
             localeId,
             speechFoundationModelArn,
@@ -70,15 +69,19 @@ export class ConnectAgentBot extends Bot {
     });
 
     const { region, account } = Stack.of(this);
-    this.role.addToPrincipalPolicy(new PolicyStatement({
-      effect: Effect.ALLOW,
-      actions: ['wisdom:GetAssistant', 'wisdom:CreateSession'],
-      resources: [assistantArn, `${assistantArn}/*`],
-    }));
-    this.role.addToPrincipalPolicy(new PolicyStatement({
-      effect: Effect.ALLOW,
-      actions: ['wisdom:SendMessage', 'wisdom:GetNextMessage'],
-      resources: [`arn:aws:wisdom:${region}:${account}:session/*`],
-    }));
+    this.role.addToPrincipalPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['wisdom:GetAssistant', 'wisdom:CreateSession'],
+        resources: [assistantArn, `${assistantArn}/*`],
+      }),
+    );
+    this.role.addToPrincipalPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['wisdom:SendMessage', 'wisdom:GetNextMessage'],
+        resources: [`arn:aws:wisdom:${region}:${account}:session/*`],
+      }),
+    );
   }
 }
