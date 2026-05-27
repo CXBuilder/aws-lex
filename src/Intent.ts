@@ -18,6 +18,11 @@ export interface IntentProps {
   readonly confirmationFailurePrompt?: string;
   readonly fulfillmentPrompt?: string;
   readonly fulfillmentFailurePrompt?: string;
+  /**
+   * ARN of the Amazon Q in Connect assistant.
+   * Required when parentIntentSignature is 'AMAZON.QInConnectIntent'.
+   */
+  readonly qInConnectAssistantArn?: string;
 }
 
 export class Intent {
@@ -49,6 +54,8 @@ export class Intent {
    */
   fulfillmentFailurePrompt?: string;
 
+  qInConnectAssistantArn?: string;
+
   constructor(props: IntentProps) {
     this.name = props.name;
     this.utterances = props.utterances;
@@ -58,6 +65,7 @@ export class Intent {
     this.confirmationDeclinedPrompt = props.confirmationFailurePrompt;
     this.fulfillmentPrompt = props.fulfillmentPrompt;
     this.fulfillmentFailurePrompt = props.fulfillmentFailurePrompt;
+    this.qInConnectAssistantArn = props.qInConnectAssistantArn;
   }
 
   public toCdk(
@@ -69,9 +77,13 @@ export class Intent {
       dialogCodeHook: { enabled: dialogCodeHook },
       fulfillmentCodeHook: {
         enabled: fulfillmentCodeHook,
+        isActive: true,
         postFulfillmentStatusSpecification: this.getPostFulfillmentPrompt(),
       },
       parentIntentSignature: this.parentIntentSignature,
+      qInConnectIntentConfiguration: this.qInConnectAssistantArn
+        ? { qInConnectAssistantConfiguration: { assistantArn: this.qInConnectAssistantArn } }
+        : undefined,
       sampleUtterances: this.utterances?.map((u) => ({
         utterance: u,
       })),

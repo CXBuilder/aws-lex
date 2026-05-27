@@ -246,6 +246,53 @@ const westStack = new WestStack(app, 'WestStack', eastStack);
 - `connectInstanceArn` (optional): ARN of the Amazon Connect instance to associate with the bot
 - `logGroup` (optional): Set to `false` to disable automatic log group creation (default: `true`)
 
+## ConnectAgentBot
+
+`ConnectAgentBot` is a purpose-built construct that wires an Amazon Lex bot to **Amazon Q in Connect** (formerly Amazon Wisdom). It configures the `AMAZON.QInConnectIntent` automatically and grants the bot role the IAM permissions required to create and query Q in Connect sessions — so you only need to supply your assistant ARN and locale settings.
+
+### When to use
+
+Use `ConnectAgentBot` when you want an Amazon Connect contact flow to hand off to Q in Connect for generative AI-assisted responses. The bot acts as the bridge: Connect invokes the Lex bot, the bot triggers `QInConnectIntent`, and Q in Connect returns an AI-generated response via `((x-amz-lex:q-in-connect-response))`.
+
+### Example
+
+```typescript
+import { App, Stack } from 'aws-cdk-lib';
+import { ConnectAgentBot } from '@cxbuilder/aws-lex';
+
+const app = new App();
+const stack = new Stack(app, 'AgentBotStack');
+
+new ConnectAgentBot(stack, 'AgentBot', {
+  name: 'my-agent-bot',
+  assistantArn: 'arn:aws:wisdom:us-east-1:123456789012:assistant/abc-123',
+  connectInstanceArn: 'arn:aws:connect:us-east-1:123456789012:instance/xyz-456',
+  locales: [
+    { localeId: 'en_US', voiceId: 'Joanna' },
+  ],
+});
+```
+
+### ConnectAgentBot Properties
+
+- `name` (required): Name of the Lex bot
+- `assistantArn` (required): ARN of the Amazon Q in Connect assistant
+- `connectInstanceArn` (required): ARN of the Amazon Connect instance to associate with the bot
+- `locales` (required): Array of locale configurations
+
+### ConnectAgentBotLocale Properties
+
+- `localeId` (required): Lex locale identifier (e.g. `en_US`)
+- `voiceId` (optional): Amazon Polly voice ID
+- `speechFoundationModelArn` (optional): Bedrock foundation model ARN for speech. Defaults to `amazon.nova-2-sonic-v1:0` in the stack's region
+
+### What it configures automatically
+
+- A single `AmazonQinConnect` intent backed by `AMAZON.QInConnectIntent`
+- Fulfillment response set to `((x-amz-lex:q-in-connect-response))`
+- Fallback intent routed through a dialog code hook that ends the conversation on success, failure, or timeout
+- Bot role policies for `wisdom:GetAssistant`, `wisdom:CreateSession`, `wisdom:SendMessage`, and `wisdom:GetNextMessage`
+
 ## Utilities
 
 ### throttleDeploy

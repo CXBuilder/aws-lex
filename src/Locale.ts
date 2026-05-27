@@ -30,12 +30,23 @@ export interface LocaleCodeHook {
 export interface LocaleProps {
   readonly localeId: string;
   readonly nluConfidenceThreshold?: number;
-  readonly voiceId: string;
+  readonly voiceId?: string;
   readonly description?: string;
   readonly engine?: VoiceEngine;
   readonly intents?: Intent[];
   readonly slotTypes?: SlotType[];
   readonly codeHook?: LocaleCodeHook;
+  /**
+   * Bedrock foundation model ARN for speech (e.g. Amazon Nova Sonic).
+   * When set, voiceSettings is omitted and unifiedSpeechSettings is applied via
+   * a CloudFormation property override in the parent Bot construct.
+   * Example: 'arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-2-sonic-v1:0'
+   */
+  readonly speechFoundationModelArn?: string;
+  /**
+   * Override the initialResponseSetting on the auto-generated FallbackIntent.
+   */
+  readonly fallbackIntentInitialResponseSetting?: CfnBot.InitialResponseSettingProperty;
 }
 
 export class Locale {
@@ -46,7 +57,7 @@ export class Locale {
    */
   nluConfidenceThreshold?: number;
 
-  voiceId: string;
+  voiceId?: string;
 
   description?: string;
 
@@ -69,6 +80,8 @@ export class Locale {
    * Optional dialog and fulfillment hooks
    */
   codeHook?: LocaleCodeHook;
+  speechFoundationModelArn?: string;
+  fallbackIntentInitialResponseSetting?: CfnBot.InitialResponseSettingProperty;
 
   constructor(props: LocaleProps) {
     this.localeId = props.localeId;
@@ -79,6 +92,8 @@ export class Locale {
     this.intents = props.intents;
     this.slotTypes = props.slotTypes;
     this.codeHook = props.codeHook;
+    this.speechFoundationModelArn = props.speechFoundationModelArn;
+    this.fallbackIntentInitialResponseSetting = props.fallbackIntentInitialResponseSetting;
   }
 
   public toCdk(botNluConfidenceThreshold: number): CfnBot.BotLocaleProperty {
@@ -89,11 +104,17 @@ export class Locale {
       localeId: this.localeId,
       nluConfidenceThreshold:
         this.nluConfidenceThreshold ?? botNluConfidenceThreshold,
-      voiceSettings: {
-        voiceId: this.voiceId,
-        engine: this.engine ?? 'neural',
-      },
-
+      voiceSettings: this.voiceId && !this.speechFoundationModelArn
+        ? { voiceId: this.voiceId, engine: this.engine ?? 'neural' }
+        : undefined,
+      unifiedSpeechSettings: this.speechFoundationModelArn
+        ? {
+            speechFoundationModel: {
+              modelArn: this.speechFoundationModelArn,
+              voiceId: this.voiceId,
+            },
+          }
+        : undefined,
       slotTypes: (this.slotTypes ?? []).map((s) => s.toCdk()),
       intents: [
         ...(this.intents ?? []).map((intent) =>
@@ -104,6 +125,7 @@ export class Locale {
           dialogCodeHook: { enabled: dialogCodeHook },
           fulfillmentCodeHook: { enabled: fulfillmentCodeHook },
           parentIntentSignature: 'AMAZON.FallbackIntent',
+          initialResponseSetting: this.fallbackIntentInitialResponseSetting,
         },
       ],
       description: this.description,

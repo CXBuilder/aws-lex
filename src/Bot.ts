@@ -1,3 +1,4 @@
+import { CfnTag } from 'aws-cdk-lib';
 import { IRole } from 'aws-cdk-lib/aws-iam';
 import { CfnBot, CfnBotAlias, CfnBotVersion } from 'aws-cdk-lib/aws-lex';
 import { Construct } from 'constructs';
@@ -62,6 +63,11 @@ export interface BotProps {
    * If provided, associates the bot with the Amazon Connect instance.
    */
   readonly connectInstanceArn?: string;
+
+  /**
+   * Tags to apply to the bot resource.
+   */
+  readonly botTags?: CfnTag[];
 }
 
 /**
@@ -85,6 +91,12 @@ export class Bot extends Construct {
       nluConfidenceThreshold = 0.4,
       replicaRegions = [],
     } = props;
+
+    const botTags =
+      props.connectInstanceArn &&
+      !(props.botTags ?? []).some((t) => t.key === 'AmazonConnectEnabled')
+        ? [...(props.botTags ?? []), { key: 'AmazonConnectEnabled', value: 'True' }]
+        : props.botTags;
 
     if (props.logGroup !== false) {
       // Create log group if not provided
@@ -126,6 +138,7 @@ export class Bot extends Construct {
         conversationLogSettings: this.conversationLogSettings('TestBotAlias'),
       },
       replication,
+      botTags,
     });
 
     // A new version is created when the hash of the bot props change.

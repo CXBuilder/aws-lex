@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`YesNoBot matches snapshot 1`] = `
 {
@@ -72,6 +72,7 @@ exports[`YesNoBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": false,
+                  "IsActive": true,
                 },
                 "Name": "Yes",
                 "SampleUtterances": [
@@ -122,6 +123,7 @@ exports[`YesNoBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": false,
+                  "IsActive": true,
                 },
                 "Name": "No",
                 "SampleUtterances": [
@@ -181,6 +183,7 @@ exports[`YesNoBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": false,
+                  "IsActive": true,
                 },
                 "Name": "Yes",
                 "SampleUtterances": [
@@ -237,6 +240,7 @@ exports[`YesNoBot matches snapshot 1`] = `
                 },
                 "FulfillmentCodeHook": {
                   "Enabled": false,
+                  "IsActive": true,
                 },
                 "Name": "No",
                 "SampleUtterances": [
