@@ -113,6 +113,7 @@ export class Bot extends Construct {
       props.role ??
       new LexRole(this, 'Role', {
         lexLogGroupName: this.logGroup?.logGroupName,
+        replicaRegions,
       });
 
     const replication = replicaRegions.length
