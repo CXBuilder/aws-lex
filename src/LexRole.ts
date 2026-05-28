@@ -15,6 +15,12 @@ export interface LexRoleProps {
    * Limits permission to write to a single log group
    */
   readonly lexLogGroupName?: string;
+
+  /**
+   * Replica regions for Lex Global Resiliency. Grants the role permission to
+   * write to the same log group name in each replica region.
+   */
+  readonly replicaRegions?: string[];
 }
 /**
  * Standard lex role configuration
@@ -28,7 +34,9 @@ export class LexRole extends Role {
 
     const { account, region } = Stack.of(this);
 
-    const { lexLogGroupName = '*' } = props ?? {};
+    const { lexLogGroupName = '*', replicaRegions = [] } = props ?? {};
+
+    const logGroupRegions = [region, ...replicaRegions];
 
     this.attachInlinePolicy(
       new Policy(this, 'LexPolicy', {
@@ -41,9 +49,9 @@ export class LexRole extends Role {
           new PolicyStatement({
             effect: Effect.ALLOW,
             actions: ['logs:CreateLogStream', 'logs:PutLogEvents'],
-            resources: [
-              `arn:aws:logs:${region}:${account}:log-group:${lexLogGroupName}:log-stream:*`,
-            ],
+            resources: logGroupRegions.map(
+              (r) => `arn:aws:logs:${r}:${account}:log-group:${lexLogGroupName}:log-stream:*`
+            ),
           }),
           // Uncomment this if using Sentiment Analysis
           // new PolicyStatement({
