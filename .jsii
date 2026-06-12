@@ -9,7 +9,7 @@
     "url": "https://www.cxbuilder.ai"
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.256.1",
+    "aws-cdk-lib": "^2.255.0",
     "cdk-nag": "^2.38.2",
     "constructs": "^10.5.1"
   },
@@ -9012,7 +9012,7 @@
     "stability": "stable"
   },
   "homepage": "https://github.com/cxbuilder/aws-lex#readme",
-  "jsiiVersion": "5.9.41",
+  "jsiiVersion": "5.9.44",
   "keywords": [
     "aws",
     "cdk",
@@ -9038,7 +9038,7 @@
   },
   "name": "@cxbuilder/aws-lex",
   "readme": {
-    "markdown": "# @cxbuilder/aws-lex\n\n[![CI/CD Pipeline](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml)\n[![npm version](https://badge.fury.io/js/@cxbuilder%2Faws-lex.svg)](https://badge.fury.io/js/@cxbuilder%2Faws-lex)\n[![PyPI version](https://badge.fury.io/py/cxbuilder-aws-lex.svg)](https://badge.fury.io/py/cxbuilder-aws-lex)\n[![View on Construct Hub](https://constructs.dev/badge?package=%40cxbuilder%2Faws-lex)](https://constructs.dev/packages/@cxbuilder/aws-lex)\n\n## Overview\n\nThe `@cxbuilder/aws-lex` package provides higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK. It significantly simplifies the process of building conversational interfaces with Amazon Lex by abstracting away the complexity of the AWS LexV2 L1 constructs.\n\n## Why Use This Library?\n\nAWS LexV2 L1 constructs are notoriously difficult to understand and use correctly. They require deep knowledge of the underlying CloudFormation resources and complex property structures. This library addresses these challenges by:\n\n- **Simplifying the API**: Providing an intuitive, object-oriented interface for defining bots, intents, slots, and locales\n- **Automating best practices**: Handling versioning and alias management automatically\n- **Reducing boilerplate**: Eliminating repetitive code for common bot configurations\n- **Improving maintainability**: Using classes with encapsulated transformation logic instead of complex nested objects\n\n## Key Features\n\n- **Automatic versioning**: Creates a bot version and associates it with the `live` alias when input changes\n- **Simplified intent creation**: Define intents with utterances and slots using a clean, declarative syntax\n- **Multi-locale support**: Easily create bots that support multiple languages\n- **Lambda integration**: Streamlined setup for dialog and fulfillment Lambda hooks\n- **Extensible design**: For complex use cases, you can always drop down to L1 constructs or fork the repository\n\n## Installation\n\n### Node.js\n\n```bash\nnpm install @cxbuilder/aws-lex\n```\n\n### Python\n\n```bash\npip install cxbuilder-aws-lex\n```\n\n## Quick Start\n\nCreate a simple yes/no bot with multi-language support:\n\n### TypeScript\n\n```typescript\nimport { App, Stack } from 'aws-cdk-lib';\nimport { Bot, Intent, Locale } from '@cxbuilder/aws-lex';\n\nconst app = new App();\nconst stack = new Stack(app, 'MyLexStack');\n\nnew Bot(stack, 'YesNoBot', {\n  name: 'my-yes-no-bot',\n  locales: [\n    new Locale({\n      localeId: 'en_US',\n      voiceId: 'Joanna',\n      intents: [\n        new Intent({\n          name: 'Yes',\n          utterances: ['yes', 'yeah', 'yep', 'absolutely', 'of course'],\n        }),\n        new Intent({\n          name: 'No',\n          utterances: ['no', 'nope', 'never', 'absolutely not', 'no way'],\n        }),\n      ],\n    }),\n    new Locale({\n      localeId: 'es_US',\n      voiceId: 'Lupe',\n      intents: [\n        new Intent({\n          name: 'Yes',\n          utterances: ['sí', 'claro', 'por supuesto', 'correcto', 'exacto'],\n        }),\n        new Intent({\n          name: 'No',\n          utterances: ['no', 'para nada', 'negativo', 'jamás', 'en absoluto'],\n        }),\n      ],\n    }),\n  ],\n});\n```\n\n## Advanced Example: Bot with Slots and Lambda Integration\n\n```typescript\nimport { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';\nimport { Bot, Intent, Locale, Slot } from '@cxbuilder/aws-lex';\n\nconst fulfillmentLambda = new NodejsFunction(stack, 'Handler', {\n  entry: './src/bot-handler.ts',\n});\n\nnew Bot(stack, 'BookingBot', {\n  name: 'hotel-booking-bot',\n  locales: [\n    new Locale({\n      localeId: 'en_US',\n      voiceId: 'Joanna',\n      codeHook: {\n        fn: fulfillmentLambda,\n        fulfillment: true,\n      },\n      intents: [\n        new Intent({\n          name: 'BookHotel',\n          utterances: [\n            'I want to book a room',\n            'Book a hotel for {checkInDate}',\n            'I need a room in {city}',\n          ],\n          slots: [\n            new Slot({\n              name: 'city',\n              slotTypeName: 'AMAZON.City',\n              elicitationMessages: ['Which city would you like to visit?'],\n              required: true,\n            }),\n            new Slot({\n              name: 'checkInDate',\n              slotTypeName: 'AMAZON.Date',\n              elicitationMessages: ['What date would you like to check in?'],\n              required: true,\n            }),\n          ],\n        }),\n      ],\n    }),\n  ],\n});\n```\n\n## Architecture\n\nThe library uses a class-based approach with the following main components:\n\n- **Bot**: The main construct that creates the Lex bot resource\n- **Locale**: Configures language-specific settings and resources\n- **Intent**: Defines conversational intents with utterances and slots\n- **Slot**: Defines input parameters for intents\n- **SlotType**: Defines custom slot types with enumeration values\n\n## Advanced Usage\n\nWhile this library simplifies common use cases, you can still leverage the full power of AWS LexV2 for complex scenarios:\n\n- **Rich responses**: For bots that use cards and complex response types\n- **Custom dialog management**: For sophisticated conversation flows\n- **Advanced slot validation**: For complex input validation requirements\n\nIn these cases, you can either extend the library classes or drop down to the L1 constructs as needed.\n\n## Bot Replication\n\nWhen Lex replication is enabled, the Lex service automatically replicates the bot configuration to the replica region. However, the following resources are **not** automatically replicated:\n\n- Lambda handler permissions\n- Amazon Connect instance associations\n- Conversation log group configurations\n\nThe `BotReplica` construct handles creating these resources in the replica region.\n\n### Example: Multi-Region Bot Setup\n\n```typescript\nimport { App, Stack } from 'aws-cdk-lib';\nimport { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';\nimport { Bot, BotReplica, Intent, Locale } from '@cxbuilder/aws-lex';\n\nconst app = new App();\n\n// Primary region (us-east-1)\nclass EastStack extends Stack {\n  public readonly bot: Bot;\n  public readonly botHandler: NodejsFunction;\n\n  constructor(scope: App, id: string) {\n    super(scope, id, { env: { region: 'us-east-1' } });\n\n    this.botHandler = new NodejsFunction(this, 'BotHandler', {\n      entry: './src/bot-handler.ts',\n    });\n\n    this.bot = new Bot(this, 'MyBot', {\n      name: 'customer-service-bot',\n      handler: this.botHandler,\n      replicaRegions: ['us-west-2'],\n      connectInstanceArn:\n        'arn:aws:connect:us-east-1:123456789012:instance/abc123',\n      locales: [\n        new Locale({\n          localeId: 'en_US',\n          voiceId: 'Joanna',\n          intents: [\n            new Intent({\n              name: 'GetHelp',\n              utterances: ['I need help', 'Can you help me'],\n            }),\n          ],\n        }),\n      ],\n    });\n  }\n}\n\n// Replica region (us-west-2)\nclass WestStack extends Stack {\n  public readonly botHandler: NodejsFunction;\n  public readonly botReplica: BotReplica;\n\n  constructor(scope: App, id: string, eastStack: EastStack) {\n    super(scope, id, { env: { region: 'us-west-2' } });\n\n    this.botHandler = new NodejsFunction(this, 'BotHandler', {\n      entry: './src/bot-handler.ts',\n    });\n\n    this.botReplica = new BotReplica(this, 'MyBotReplica', {\n      botName: eastStack.bot.botName,\n      botId: eastStack.bot.botId,\n      botAliasId: eastStack.bot.botAliasId,\n      handler: this.botHandler,\n      connectInstanceArn:\n        'arn:aws:connect:us-west-2:123456789012:instance/abc123',\n    });\n  }\n}\n\nconst eastStack = new EastStack(app, 'EastStack');\nconst westStack = new WestStack(app, 'WestStack', eastStack);\n```\n\n### BotReplica Properties\n\n- `botName` (required): The name of the bot from the primary region\n- `botId` (required): The bot ID from the primary region\n- `botAliasId` (required): The bot alias ID from the primary region\n- `handler` (optional): Lambda function to use as the bot handler in the replica region\n- `connectInstanceArn` (optional): ARN of the Amazon Connect instance to associate with the bot\n- `logGroup` (optional): Set to `false` to disable automatic log group creation (default: `true`)\n\n## Utilities\n\n### throttleDeploy\n\nDeploying multiple Lex bots in parallel can hit AWS Lex API limits, causing deployment failures. This function solves that by controlling deployment concurrency through dependency chains, organizing bots into batches where each batch deploys sequentially while different batches can still deploy in parallel.\n\n## License\n\nMIT\n"
+    "markdown": "# @cxbuilder/aws-lex\n\n[![CI/CD Pipeline](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/cxbuilder/aws-lex/actions/workflows/ci-cd.yml)\n[![npm version](https://badge.fury.io/js/@cxbuilder%2Faws-lex.svg)](https://badge.fury.io/js/@cxbuilder%2Faws-lex)\n[![PyPI version](https://badge.fury.io/py/cxbuilder-aws-lex.svg)](https://badge.fury.io/py/cxbuilder-aws-lex)\n[![View on Construct Hub](https://constructs.dev/badge?package=%40cxbuilder%2Faws-lex)](https://constructs.dev/packages/@cxbuilder/aws-lex)\n\n## Overview\n\nThe `@cxbuilder/aws-lex` package provides higher-level (L2) constructs for AWS LexV2 bot creation using the AWS CDK. It significantly simplifies the process of building conversational interfaces with Amazon Lex by abstracting away the complexity of the AWS LexV2 L1 constructs.\n\n## Why Use This Library?\n\nAWS LexV2 L1 constructs are notoriously difficult to understand and use correctly. They require deep knowledge of the underlying CloudFormation resources and complex property structures. This library addresses these challenges by:\n\n- **Simplifying the API**: Providing an intuitive, object-oriented interface for defining bots, intents, slots, and locales\n- **Automating best practices**: Handling versioning and alias management automatically\n- **Reducing boilerplate**: Eliminating repetitive code for common bot configurations\n- **Improving maintainability**: Using classes with encapsulated transformation logic instead of complex nested objects\n\n## Key Features\n\n- **Automatic versioning**: Creates a bot version and associates it with the `live` alias when input changes\n- **Simplified intent creation**: Define intents with utterances and slots using a clean, declarative syntax\n- **Multi-locale support**: Easily create bots that support multiple languages\n- **Lambda integration**: Streamlined setup for dialog and fulfillment Lambda hooks\n- **Extensible design**: For complex use cases, you can always drop down to L1 constructs or fork the repository\n\n## Installation\n\n### Node.js\n\n```bash\nnpm install @cxbuilder/aws-lex\n```\n\n### Python\n\n```bash\npip install cxbuilder-aws-lex\n```\n\n## Quick Start\n\nCreate a simple yes/no bot with multi-language support:\n\n### TypeScript\n\n```typescript\nimport { App, Stack } from 'aws-cdk-lib';\nimport { Bot, Intent, Locale } from '@cxbuilder/aws-lex';\n\nconst app = new App();\nconst stack = new Stack(app, 'MyLexStack');\n\nnew Bot(stack, 'YesNoBot', {\n  name: 'my-yes-no-bot',\n  locales: [\n    new Locale({\n      localeId: 'en_US',\n      voiceId: 'Joanna',\n      intents: [\n        new Intent({\n          name: 'Yes',\n          utterances: ['yes', 'yeah', 'yep', 'absolutely', 'of course'],\n        }),\n        new Intent({\n          name: 'No',\n          utterances: ['no', 'nope', 'never', 'absolutely not', 'no way'],\n        }),\n      ],\n    }),\n    new Locale({\n      localeId: 'es_US',\n      voiceId: 'Lupe',\n      intents: [\n        new Intent({\n          name: 'Yes',\n          utterances: ['sí', 'claro', 'por supuesto', 'correcto', 'exacto'],\n        }),\n        new Intent({\n          name: 'No',\n          utterances: ['no', 'para nada', 'negativo', 'jamás', 'en absoluto'],\n        }),\n      ],\n    }),\n  ],\n});\n```\n\n## Advanced Example: Bot with Slots and Lambda Integration\n\n```typescript\nimport { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';\nimport { Bot, Intent, Locale, Slot } from '@cxbuilder/aws-lex';\n\nconst fulfillmentLambda = new NodejsFunction(stack, 'Handler', {\n  entry: './src/bot-handler.ts',\n});\n\nnew Bot(stack, 'BookingBot', {\n  name: 'hotel-booking-bot',\n  locales: [\n    new Locale({\n      localeId: 'en_US',\n      voiceId: 'Joanna',\n      codeHook: {\n        fn: fulfillmentLambda,\n        fulfillment: true,\n      },\n      intents: [\n        new Intent({\n          name: 'BookHotel',\n          utterances: [\n            'I want to book a room',\n            'Book a hotel for {checkInDate}',\n            'I need a room in {city}',\n          ],\n          slots: [\n            new Slot({\n              name: 'city',\n              slotTypeName: 'AMAZON.City',\n              elicitationMessages: ['Which city would you like to visit?'],\n              required: true,\n            }),\n            new Slot({\n              name: 'checkInDate',\n              slotTypeName: 'AMAZON.Date',\n              elicitationMessages: ['What date would you like to check in?'],\n              required: true,\n            }),\n          ],\n        }),\n      ],\n    }),\n  ],\n});\n```\n\n## Architecture\n\nThe library uses a class-based approach with the following main components:\n\n- **Bot**: The main construct that creates the Lex bot resource\n- **Locale**: Configures language-specific settings and resources\n- **Intent**: Defines conversational intents with utterances and slots\n- **Slot**: Defines input parameters for intents\n- **SlotType**: Defines custom slot types with enumeration values\n\n## Advanced Usage\n\nWhile this library simplifies common use cases, you can still leverage the full power of AWS LexV2 for complex scenarios:\n\n- **Rich responses**: For bots that use cards and complex response types\n- **Custom dialog management**: For sophisticated conversation flows\n- **Advanced slot validation**: For complex input validation requirements\n\nIn these cases, you can either extend the library classes or drop down to the L1 constructs as needed.\n\n## Bot Replication\n\nWhen Lex replication is enabled, the Lex service automatically replicates the bot configuration to the replica region. However, the following resources are **not** automatically replicated:\n\n- Lambda handler permissions\n- Amazon Connect instance associations\n- Conversation log group configurations\n\nThe `BotReplica` construct handles creating these resources in the replica region.\n\n### Example: Multi-Region Bot Setup\n\n```typescript\nimport { App, Stack } from 'aws-cdk-lib';\nimport { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';\nimport { Bot, BotReplica, Intent, Locale } from '@cxbuilder/aws-lex';\n\nconst app = new App();\n\n// Primary region (us-east-1)\nclass EastStack extends Stack {\n  public readonly bot: Bot;\n  public readonly botHandler: NodejsFunction;\n\n  constructor(scope: App, id: string) {\n    super(scope, id, { env: { region: 'us-east-1' } });\n\n    this.botHandler = new NodejsFunction(this, 'BotHandler', {\n      entry: './src/bot-handler.ts',\n    });\n\n    this.bot = new Bot(this, 'MyBot', {\n      name: 'customer-service-bot',\n      handler: this.botHandler,\n      replicaRegions: ['us-west-2'],\n      connectInstanceArn:\n        'arn:aws:connect:us-east-1:123456789012:instance/abc123',\n      locales: [\n        new Locale({\n          localeId: 'en_US',\n          voiceId: 'Joanna',\n          intents: [\n            new Intent({\n              name: 'GetHelp',\n              utterances: ['I need help', 'Can you help me'],\n            }),\n          ],\n        }),\n      ],\n    });\n  }\n}\n\n// Replica region (us-west-2)\nclass WestStack extends Stack {\n  public readonly botHandler: NodejsFunction;\n  public readonly botReplica: BotReplica;\n\n  constructor(scope: App, id: string, eastStack: EastStack) {\n    super(scope, id, { env: { region: 'us-west-2' } });\n\n    this.botHandler = new NodejsFunction(this, 'BotHandler', {\n      entry: './src/bot-handler.ts',\n    });\n\n    this.botReplica = new BotReplica(this, 'MyBotReplica', {\n      botName: eastStack.bot.botName,\n      botId: eastStack.bot.botId,\n      botAliasId: eastStack.bot.botAliasId,\n      handler: this.botHandler,\n      connectInstanceArn:\n        'arn:aws:connect:us-west-2:123456789012:instance/abc123',\n    });\n  }\n}\n\nconst eastStack = new EastStack(app, 'EastStack');\nconst westStack = new WestStack(app, 'WestStack', eastStack);\n```\n\n### BotReplica Properties\n\n- `botName` (required): The name of the bot from the primary region\n- `botId` (required): The bot ID from the primary region\n- `botAliasId` (required): The bot alias ID from the primary region\n- `handler` (optional): Lambda function to use as the bot handler in the replica region\n- `connectInstanceArn` (optional): ARN of the Amazon Connect instance to associate with the bot\n- `logGroup` (optional): Set to `false` to disable automatic log group creation (default: `true`)\n\n## ConnectAgentBot\n\n`ConnectAgentBot` is a purpose-built construct that wires an Amazon Lex bot to **Amazon Q in Connect** (formerly Amazon Wisdom). It configures the `AMAZON.QInConnectIntent` automatically and grants the bot role the IAM permissions required to create and query Q in Connect sessions — so you only need to supply your assistant ARN and locale settings.\n\n### When to use\n\nUse `ConnectAgentBot` when you want an Amazon Connect contact flow to hand off to Q in Connect for generative AI-assisted responses. The bot acts as the bridge: Connect invokes the Lex bot, the bot triggers `QInConnectIntent`, and Q in Connect returns an AI-generated response via `((x-amz-lex:q-in-connect-response))`.\n\n### Example\n\n```typescript\nimport { App, Stack } from 'aws-cdk-lib';\nimport { ConnectAgentBot } from '@cxbuilder/aws-lex';\n\nconst app = new App();\nconst stack = new Stack(app, 'AgentBotStack');\n\nnew ConnectAgentBot(stack, 'AgentBot', {\n  name: 'my-agent-bot',\n  assistantArn: 'arn:aws:wisdom:us-east-1:123456789012:assistant/abc-123',\n  connectInstanceArn: 'arn:aws:connect:us-east-1:123456789012:instance/xyz-456',\n  locales: [\n    { localeId: 'en_US', voiceId: 'Joanna' },\n  ],\n});\n```\n\n### ConnectAgentBot Properties\n\n- `name` (required): Name of the Lex bot\n- `assistantArn` (required): ARN of the Amazon Q in Connect assistant\n- `connectInstanceArn` (required): ARN of the Amazon Connect instance to associate with the bot\n- `locales` (required): Array of locale configurations\n\n### ConnectAgentBotLocale Properties\n\n- `localeId` (required): Lex locale identifier (e.g. `en_US`)\n- `voiceId` (optional): Amazon Polly voice ID\n- `speechFoundationModelArn` (optional): Bedrock foundation model ARN for speech. Defaults to `amazon.nova-2-sonic-v1:0` in the stack's region\n\n### What it configures automatically\n\n- A single `AmazonQinConnect` intent backed by `AMAZON.QInConnectIntent`\n- Fulfillment response set to `((x-amz-lex:q-in-connect-response))`\n- Fallback intent routed through a dialog code hook that ends the conversation on success, failure, or timeout\n- Bot role policies for `wisdom:GetAssistant`, `wisdom:CreateSession`, `wisdom:SendMessage`, and `wisdom:GetNextMessage`\n\n## Utilities\n\n### throttleDeploy\n\nDeploying multiple Lex bots in parallel can hit AWS Lex API limits, causing deployment failures. This function solves that by controlling deployment concurrency through dependency chains, organizing bots into batches where each batch deploys sequentially while different batches can still deploy in parallel.\n\n## License\n\nMIT\n"
   },
   "repository": {
     "type": "git",
@@ -9111,7 +9111,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 198
+            "line": 199
           },
           "name": "botAliasId",
           "type": {
@@ -9126,7 +9126,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 191
+            "line": 192
           },
           "name": "botId",
           "type": {
@@ -9141,7 +9141,7 @@
           "immutable": true,
           "locationInModule": {
             "filename": "src/Bot.ts",
-            "line": 184
+            "line": 185
           },
           "name": "botName",
           "type": {
@@ -9686,21 +9686,6 @@
         {
           "abstract": true,
           "docs": {
-            "stability": "stable"
-          },
-          "immutable": true,
-          "locationInModule": {
-            "filename": "src/ConnectAgentBot.ts",
-            "line": 9
-          },
-          "name": "voiceId",
-          "type": {
-            "primitive": "string"
-          }
-        },
-        {
-          "abstract": true,
-          "docs": {
             "default": "amazon.nova-2-sonic-v1:0",
             "stability": "stable"
           },
@@ -9710,6 +9695,22 @@
             "line": 13
           },
           "name": "speechFoundationModelArn",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/ConnectAgentBot.ts",
+            "line": 9
+          },
+          "name": "voiceId",
           "optional": true,
           "type": {
             "primitive": "string"
@@ -10193,7 +10194,7 @@
         },
         "locationInModule": {
           "filename": "src/LexRole.ts",
-          "line": 23
+          "line": 29
         },
         "parameters": [
           {
@@ -10220,7 +10221,7 @@
       "kind": "class",
       "locationInModule": {
         "filename": "src/LexRole.ts",
-        "line": 22
+        "line": 28
       },
       "name": "LexRole",
       "symbolId": "src/LexRole:LexRole"
@@ -10254,6 +10255,29 @@
           "optional": true,
           "type": {
             "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "Grants the role permission to\nwrite to the same log group name in each replica region.",
+            "stability": "stable",
+            "summary": "Replica regions for Lex Global Resiliency."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/LexRole.ts",
+            "line": 23
+          },
+          "name": "replicaRegions",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
           }
         },
         {
@@ -11304,6 +11328,6 @@
       "symbolId": "src/SlotType:SlotTypeValue"
     }
   },
-  "version": "1.4.0",
-  "fingerprint": "ZXJuIivEm3+HZg8po5lvNkUV/kZIh6I6WI2avSN/NH0="
+  "version": "1.4.1",
+  "fingerprint": "uPdKGZBTVjkOU9pK49kgRuIz9n6jMLffKOwlrH/N3h0="
 }

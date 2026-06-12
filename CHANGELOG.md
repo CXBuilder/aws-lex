@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.4.2 (2026-06-12)
+
+- ivan.bliskavka
+  - Downgrade aws-cdk-lib peer dependency to ^2.255.0
+
 ## 1.4.1 (2026-05-28)
+
 - alice.green
   - Added bot replica regions to IAM role policy so that logs can be written to log groups in replica regions
 
