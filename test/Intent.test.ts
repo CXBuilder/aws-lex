@@ -109,6 +109,22 @@ describe('Intent', () => {
     expect(cdkProps3.intentConfirmationSetting).toBeUndefined();
   });
 
+  test('should throw when no utterances and no parentIntentSignature are provided', () => {
+    expect(() => new Intent({ name: 'OrderPizza', utterances: [] })).toThrow();
+    expect(() => new Intent({ name: 'OrderPizza' })).toThrow();
+  });
+
+  test('should allow no utterances when parentIntentSignature is provided', () => {
+    expect(
+      () =>
+        new Intent({
+          name: 'QInConnect',
+          parentIntentSignature: 'AMAZON.QInConnectIntent',
+          qInConnectAssistantArn: 'arn:aws:qconnect:us-east-1:123456789012:assistant/abc',
+        })
+    ).not.toThrow();
+  });
+
   test('should conditionally include fulfillment responses', () => {
     // Only fulfillment prompt
     const intent1 = new Intent({

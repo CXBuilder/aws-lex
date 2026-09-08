@@ -57,6 +57,13 @@ export class Intent {
   qInConnectAssistantArn?: string;
 
   constructor(props: IntentProps) {
+    if (!props.parentIntentSignature && !props.utterances?.length) {
+      throw new Error(
+        `Intent "${props.name}" must define at least one sample utterance ` +
+          `(or a parentIntentSignature for built-in intents). Lex will not build a bot with zero utterances on an intent.`
+      );
+    }
+
     this.name = props.name;
     this.utterances = props.utterances;
     this.parentIntentSignature = props.parentIntentSignature;
