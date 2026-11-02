@@ -299,6 +299,10 @@ new ConnectAgentBot(stack, 'AgentBot', {
 
 Deploying multiple Lex bots in parallel can hit AWS Lex API limits, causing deployment failures. This function solves that by controlling deployment concurrency through dependency chains, organizing bots into batches where each batch deploys sequentially while different batches can still deploy in parallel.
 
+## About
+
+Built and maintained by [CXBuilder](https://cxbuilder.ai), an AWS Advanced Tier partner that designs, builds and operates Amazon Connect contact centers on AWS.
+
 ## License
 
 MIT
